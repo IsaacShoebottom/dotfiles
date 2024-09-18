@@ -1,17 +1,10 @@
 live_config_reload = true
 
-[shell]
-program = "pwsh"
-args = ["-NoLogo"]
-
 [window]
 dimensions.columns = 120
 dimensions.lines = 30
 dynamic_padding = true
 dynamic_title = true
-
-[font]
-normal.family = "CaskaydiaCove Nerd Font"
 
 [cursor]
 style.shape = "Beam"
