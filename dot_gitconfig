@@ -1,7 +1,6 @@
 [credential]
 	credentialStore = secretservice
-	helper = 
-	helper = /usr/local/bin/git-credential-manager
+	helper = /usr/bin/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [credential "https://git.shoebottom.ca"]
@@ -9,3 +8,5 @@
 [user]
 	email = ir.shoebottom@gmail.com
 	name = Isaac Shoebottom
+[core]
+	editor = nano
