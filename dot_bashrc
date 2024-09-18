@@ -1,12 +1,11 @@
-#
-# ~/.bashrc
-#
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
+# Set up terminal variables and scripts
+[[ -f ~/.bash_setup.sh ]] && . ~/.bash_setup.sh
+
+# Set aliases if aliases exist
+[[ -f ~/.bash_alias.sh ]] && . ~/.bash_alias.sh
 
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator

@@ -10,3 +10,8 @@
 	name = Isaac Shoebottom
 [core]
 	editor = nano
+	autocrlf = false
+[init]
+	defaultBranch = master
+[pull]
+	rebase = true
