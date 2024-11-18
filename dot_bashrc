@@ -10,3 +10,7 @@
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
 PS1='[\u@\h \w]\$ '
+
+# CLI env variables for programs
+EDITOR=nano
+DIFFPROG=difft
