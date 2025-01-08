@@ -1,16 +1,11 @@
 [credential]
 	credentialStore = secretservice
-	helper = 
-	helper = /usr/bin/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
-[credential "https://git.shoebottom.ca"]
-	provider = generic
+	helper = /usr/lib/git-core/git-credential-libsecret
 [user]
 	email = ir.shoebottom@gmail.com
 	name = Isaac Shoebottom
 [core]
-	editor = nano
+	editor = micro
 	autocrlf = false
 [init]
 	defaultBranch = master
