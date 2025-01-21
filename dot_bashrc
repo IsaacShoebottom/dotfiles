@@ -12,5 +12,5 @@
 PS1='[\u@\h \w]\$ '
 
 # CLI env variables for programs
-EDITOR=nano
+EDITOR=micro
 DIFFPROG=difft
