@@ -47,5 +47,5 @@ Host gitea
 
 Host aur
 	Hostname aur.archlinux.org
-	User aur
 	IdentityFile ~/.ssh/aur.ed25519
+	User aur
