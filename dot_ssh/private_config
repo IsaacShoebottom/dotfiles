@@ -44,3 +44,8 @@ Host gitea
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
 	ForwardAgent yes
+
+Host aur
+	Hostname aur.archlinux.org
+	User aur
+	IdentityFile ~/.ssh/aur.ed25519
