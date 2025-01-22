@@ -2,15 +2,22 @@
 [[ $- != *i* ]] && return
 
 # Set up terminal variables and scripts
-[[ -f ~/.bash_setup.sh ]] && . ~/.bash_setup.sh
+eval "$(zoxide init bash)"
+eval "$(packwiz completion bash)"
+eval "$(chezmoi completion bash)"
 
-# Set aliases if aliases exist
-[[ -f ~/.bash_alias.sh ]] && . ~/.bash_alias.sh
+# Set aliases
+alias ls="exa --icons --long"
+alias grep="ugrep"
+alias cd="z"
+alias cat="bat -p"
+alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
+alias update="paru; paru -c"
 
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
 PS1='[\u@\h \w]\$ '
 
-# CLI env variables for programs
+# CLI programs
 EDITOR=micro
 DIFFPROG=difft

@@ -1,5 +1,0 @@
-alias ls="exa --icons --long"
-alias grep="ugrep"
-alias cd="z"
-alias cat="bat -p"
-alias update="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; paru; paru -c"
