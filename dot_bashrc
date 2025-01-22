@@ -1,6 +1,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Required init for cli programs
+# Do not install completions unless no working, check /usr/share/bash-completion
+eval "$(zoxide init bash)"
+
 # Set aliases
 alias ls="exa --icons --long"
 alias grep="ugrep"
