@@ -12,6 +12,8 @@ alias cd="z"
 alias cat="bat -p"
 alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
 alias update="paru; paru -c"
+alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
+
 
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
