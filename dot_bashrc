@@ -6,7 +6,7 @@ eval "$(zoxide init bash)"
 eval "$(packwiz completion bash)"
 eval "$(chezmoi completion bash)"
 eval "$(gh completion --shell bash)"
-eval "$(rbw gen-completion bash)"
+eval "$(rbw gen-completions bash)"
 
 # Set aliases
 alias ls="exa --icons --long"
