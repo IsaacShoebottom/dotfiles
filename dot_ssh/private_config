@@ -1,51 +1,41 @@
-Host fcslinux
-	Hostname fcslinux.cs.unb.ca
-	Port 22
+Host fcslinux.cs.unb.ca
 	User ishoebot
 	IdentityFile ~/.ssh/unb.ed25519
 	AddKeysToAgent yes
 	ForwardAgent yes
 
-Host remotelab34
-	Hostname remotelabm34.cs.unb.ca
+Host remotelab34.cs.unb.ca
 	User ishoebot
-	Port 22
-	ProxyCommand ssh -q -W %h:%p fcslinux
+	IdentityFile ~/.ssh/unb.ed25519
+	ProxyJump fcslinux.cs.unb.ca
 
-Host remotelab35
-	Hostname remotelabm35.cs.unb.ca
+Host remotelab35.cs.unb.ca
 	User ishoebot
-	Port 22
-	ProxyCommand ssh -q -W %h:%p fcslinux
+	IdentityFile ~/.ssh/unb.ed25519
+	ProxyJump fcslinux.cs.unb.ca
 
-Host cs3103
-	Hostname cs3103.cs.unb.ca
+Host cs3103.cs.unb.ca
 	User ishoebot
-	Port 22
-	ProxyCommand ssh -q -W %h:%p fcslinux
+	IdentityFile ~/.ssh/unb.ed25519
+	ProxyJump fcslinux.cs.unb.ca
 
-Host ubuntu
-	Hostname ssh.shoebottom.ca
+Host ssh.shoebottom.ca
 	User isaac
 	Port 2222
 	IdentityFile ~/.ssh/ubuntu.ed25519
 	AddKeysToAgent yes
 
-Host github
-	Hostname github.com
+Host github.com
 	User git
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
-	ForwardAgent yes
 
-Host gitea
-	Hostname ssh.shoebottom.ca
+Host git.shoebottom.ca
 	User gitea
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
-	ForwardAgent yes
 
-Host aur
-	Hostname aur.archlinux.org
-	IdentityFile ~/.ssh/aur.ed25519
+Host aur.archlinux.org
 	User aur
+	IdentityFile ~/.ssh/aur.ed25519
+	AddKeysToAgent yes
