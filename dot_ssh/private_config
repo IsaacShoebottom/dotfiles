@@ -1,60 +1,38 @@
-Host fcslinux.cs.unb.ca
-	Hostname fcslinux.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-	AddKeysToAgent yes
-	ForwardAgent yes
+# For UNB host tab completion
+Include unb_hosts
 
-Host remotelab34.cs.unb.ca
-	Hostname remotelabm34.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-	ProxyCommand ssh -q -W %h:%p fcslinux.cs.unb.ca
-
-Host remotelabm34.cs.unb.ca
-	Hostname remotelabm34.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-
-Host remotelab35.cs.unb.ca
-	Hostname remotelabm35.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-	ProxyCommand ssh -q -W %h:%p fcslinux.cs.unb.ca
-
-Host remotelabm35.cs.unb.ca
-	Hostname remotelabm35.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-
-Host cs3103.cs.unb.ca
-	Hostname cs3103.cs.unb.ca
-	User ishoebot
-	Port 22
-	IdentityFile ~/.ssh/unb.ed25519
-	ProxyCommand ssh -q -W %h:%p fcslinux.cs.unb.ca
-
+# Personal webserver
 Host ssh.shoebottom.ca
 	User isaac
 	Port 2222
 	IdentityFile ~/.ssh/ubuntu.ed25519
 	AddKeysToAgent yes
 
+# Bastion host for the CS department
+Host fcslinux.cs.unb.ca
+	User ishoebot
+	IdentityFile ~/.ssh/unb.ed25519
+	AddKeysToAgent yes
+	ForwardAgent yes
+
+# Individual hosts for the CS department
+Host *m??.cs.unb.ca
+	User ishoebot
+	ProxyJump fcslinux.cs.unb.ca
+
+# GitHub ssh commits
 Host github.com
 	User git
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
 
+# Gitea ssh commits
 Host git.shoebottom.ca
 	User gitea
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
 
+# AUR ssh commits
 Host aur.archlinux.org
 	User aur
 	IdentityFile ~/.ssh/aur.ed25519
