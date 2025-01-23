@@ -1,3 +1,5 @@
+# If running interactively, then:
 if ($?prompt) then
-set SHELL = "/usr/bin/bash"
-exec $SHELL
+    set SHELL = "/usr/bin/bash"
+    exec $SHELL
+endif
