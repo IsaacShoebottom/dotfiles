@@ -4,6 +4,10 @@
 # Required init for cli programs
 # Do not install completions unless no working, check /usr/share/bash-completion
 eval "$(zoxide init zsh)"
+autoload -Uz promptinit
+autoload -Uz compinit
+promptinit
+compinit
 
 # Set aliases
 alias ls="eza --icons --long"
