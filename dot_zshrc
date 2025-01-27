@@ -11,6 +11,9 @@ compinit
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+
 # Set aliases
 alias ls="eza --icons --long"
 alias grep="ugrep"
@@ -24,7 +27,7 @@ alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
 # Helpful tool: https://zsh-prompt-generator.site/
 # On github: https://github.com/k-yokoishi/zsh-prompt-generator
 PROMPT="[%n@%m %~]$ "
-RPROMPT="%?:%h"
+RPROMPT="%?:%h | %*"
 
 # CLI programs
 EDITOR=micro
