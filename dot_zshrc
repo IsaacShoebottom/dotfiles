@@ -1,13 +1,25 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt nomatch
-unsetopt autocd beep extendedglob notify
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/isaac/.zshrc'
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+# Required init for cli programs
+# Do not install completions unless no working, check /usr/share/bash-completion
+eval "$(zoxide init zsh)"
+
+# Set aliases
+alias ls="eza --icons --long"
+alias grep="ugrep"
+alias cd="z"
+alias cat="bat -p"
+alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
+alias update="paru; paru -c"
+alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
+
+
+# Helpful tool: https://zsh-prompt-generator.site/
+# On github: https://github.com/k-yokoishi/zsh-prompt-generator
+PROMPT="[%n@%m %~]$ "
+RPROMPT="%?:%h"
+
+# CLI programs
+EDITOR=micro
+DIFFPROG=difft
