@@ -13,6 +13,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
+bindkey "^[[3~" delete-char
 
 # Set aliases
 alias ls="eza --icons --long"
