@@ -29,7 +29,3 @@ alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
 # On github: https://github.com/k-yokoishi/zsh-prompt-generator
 PROMPT="[%n@%m %~]$ "
 RPROMPT="%?:%h | %*"
-
-# CLI programs
-EDITOR=micro
-DIFFPROG=difft
