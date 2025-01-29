@@ -28,6 +28,7 @@ Host github.com
 
 # Gitea ssh commits
 Host git.shoebottom.ca
+	Hostname ssh.shoebottom.ca
 	User gitea
 	Port 2221
 	IdentityFile ~/.ssh/git.ed25519
