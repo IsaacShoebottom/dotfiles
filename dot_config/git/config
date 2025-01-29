@@ -1,6 +1,7 @@
 [credential]
 	credentialStore = secretservice
 	helper = /usr/lib/git-core/git-credential-libsecret
+	helper = cache
 [user]
 	email = ir.shoebottom@gmail.com
 	name = Isaac Shoebottom
