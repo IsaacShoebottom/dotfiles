@@ -25,6 +25,7 @@ Host github.com
 	User git
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
+	ForwardX11 no
 
 # Gitea ssh commits
 Host git.shoebottom.ca
@@ -33,9 +34,11 @@ Host git.shoebottom.ca
 	Port 2221
 	IdentityFile ~/.ssh/git.ed25519
 	AddKeysToAgent yes
+	ForwardX11 no
 
 # AUR ssh commits
 Host aur.archlinux.org
 	User aur
 	IdentityFile ~/.ssh/aur.ed25519
 	AddKeysToAgent yes
+	ForwardX11 no
