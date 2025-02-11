@@ -1,0 +1,29 @@
+add_newline = false
+username.show_always = true
+username.format = "[$user]($style)"
+username.style_user = "white"
+hostname.ssh_only = false
+hostname.format = "[$ssh_symbol$hostname]($style)"
+hostname.style = "white"
+directory.truncate_to_repo = false
+directory.format = "[$path]($style)[$read_only]($read_only_style)"
+directory.style = "white"
+character.success_symbol = "[\\$](green)"
+character.error_symbol = "[\\$](red)"
+time.disabled = false
+time.format = "[$time]($style)"
+time.style = "white"
+git_branch.always_show_remote = true
+git_branch.format = "[$symbol](bright-black)[$branch]($style)"
+git_branch.style = "white"
+git_commit.only_detached = false
+git_commit.tag_disabled = false
+git_commit.format = "[$hash$tag]($style)"
+git_commit.style = "bright-black"
+
+
+# A minimal left prompt
+format = "[\\[](bright-black)$username[@](bright-black)$hostname $directory[\\]](bright-black)$character"
+
+# move the rest of the prompt to the right
+right_format = """$git_branch $git_commit $time"""
