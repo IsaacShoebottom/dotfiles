@@ -21,6 +21,7 @@ alias cd="z"
 alias cat="bat -p"
 alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
 alias update="paru; flatpak update"
+alias rc="source ~/.config/zsh/.zshrc"
 function ls {
 	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
 		eza --icons --long $@
