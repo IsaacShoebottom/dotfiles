@@ -68,6 +68,16 @@ alias .status="chezmoi git status"
 alias .diff="chezmoi git diff"
 alias .update="chezmoi update"
 
+# XDG zsh stuff
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+
+# XDG aliases
+alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
+alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME/yarn/config'"
+alias units="units --history '$XDG_DATA_HOME/units_history'"
+alias nvidia-settings="nvidia-settings --config='$XDG_CONFIG_HOME/nvidia/settings'"
+alias adb="HOME='$XDG_DATA_HOME/android' adb"
 
 # Helpful tool: https://zsh-prompt-generator.site/
 # On github: https://github.com/k-yokoishi/zsh-prompt-generator

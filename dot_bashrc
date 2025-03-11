@@ -15,6 +15,9 @@ alias update="paru; paru -c"
 alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
 
 
+# XDG stuff
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
+
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
 PS1='[\u@\h \w]\$ '
