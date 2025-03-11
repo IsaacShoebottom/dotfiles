@@ -29,6 +29,14 @@ function ls {
 	fi
 }
 
+# Dotfiles management
+function .add {
+	chezmoi add $1
+	chezmoi git diff
+	if $(read -q "?Commit changes? [y/N]"); then
+		chezmoi git commit -- -am $2
+	fi
+}
 function .re-add {
 	chezmoi re-add
 	chezmoi git diff
@@ -36,6 +44,10 @@ function .re-add {
 		chezmoi git commit -- -am $1
 	fi
 }
+alias .push="chezmoi git push"
+alias .pull="chezmoi git pull"
+alias .status="chezmoi git status"
+alias .update="chezmoi update"
 
 
 # Helpful tool: https://zsh-prompt-generator.site/
