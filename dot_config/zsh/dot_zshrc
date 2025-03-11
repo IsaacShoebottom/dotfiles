@@ -1,0 +1,88 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Required init for cli programs
+# Do not install completions unless no working, check /usr/share/bash-completion
+eval "$(zoxide init zsh)"
+autoload -Uz promptinit
+autoload -Uz compinit
+promptinit
+compinit
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey "^[[3~" delete-char
+
+# Set aliases
+alias grep="ugrep"
+alias cd="z"
+alias cat="bat -p"
+alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
+alias update="paru; flatpak update"
+function ls {
+	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
+		eza --icons --long $@
+	else
+		eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
+	fi
+}
+
+# Dotfiles management
+function .add {
+	if [[ -z $1 || -z $2 ]]; then
+		echo "Usage: .add <file> <message>"
+		return 1
+	fi
+
+	chezmoi add $1
+	chezmoi git add .
+	chezmoi git status
+	if $(read -q "?Commit changes? [y/N]"); then
+		chezmoi git commit -- -am $2
+		if $(read -q "?Push changes? [y/N]"); then
+			chezmoi git push
+		fi
+	fi
+}
+function .re-add {
+	if [[ -z $1 ]]; then
+		echo "Usage: .re-add <message>"
+		return 1
+	fi
+
+	chezmoi re-add
+	chezmoi git status
+	chezmoi git diff
+	if $(read -q "?Commit changes? [y/N]"); then
+		chezmoi git commit -- -am $1
+		if $(read -q "?Push changes? [y/N]"); then
+			chezmoi git push
+		fi
+	fi
+}
+alias .push="chezmoi git push"
+alias .pull="chezmoi git pull"
+alias .status="chezmoi git status"
+alias .diff="chezmoi git diff"
+alias .update="chezmoi update"
+
+# XDG zsh stuff
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+
+# XDG aliases
+alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
+alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME/yarn/config'"
+alias units="units --history '$XDG_DATA_HOME/units_history'"
+alias nvidia-settings="nvidia-settings --config='$XDG_CONFIG_HOME/nvidia/settings'"
+alias adb="HOME='$XDG_DATA_HOME/android' adb"
+
+# Helpful tool: https://zsh-prompt-generator.site/
+# On github: https://github.com/k-yokoishi/zsh-prompt-generator
+PROMPT="[%n@%m %~]$ "
+RPROMPT="%?:%h | %*"
+
+# Starship after defining custom prompt, easy to remove
+eval "$(starship init zsh)"
