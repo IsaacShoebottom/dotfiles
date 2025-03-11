@@ -31,22 +31,41 @@ function ls {
 
 # Dotfiles management
 function .add {
+	if [[ -z $1 || -z $2 ]]; then
+		echo "Usage: .add <file> <message>"
+		return 1
+	fi
+
 	chezmoi add $1
+	chezmoi git status
 	chezmoi git diff
 	if $(read -q "?Commit changes? [y/N]"); then
 		chezmoi git commit -- -am $2
+		if $(read -q "?Push changes? [y/N]"); then
+			chezmoi git push
+		fi
 	fi
 }
 function .re-add {
+	if [[ -z $1 ]]; then
+		echo "Usage: .re-add <message>"
+		return 1
+	fi
+
 	chezmoi re-add
+	chezmoi git status
 	chezmoi git diff
 	if $(read -q "?Commit changes? [y/N]"); then
 		chezmoi git commit -- -am $1
+		if $(read -q "?Push changes? [y/N]"); then
+			chezmoi git push
+		fi
 	fi
 }
 alias .push="chezmoi git push"
 alias .pull="chezmoi git pull"
 alias .status="chezmoi git status"
+alias .diff="chezmoi git diff"
 alias .update="chezmoi update"
 
 
