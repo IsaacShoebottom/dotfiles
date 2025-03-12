@@ -6,18 +6,78 @@
 eval "$(zoxide init bash)"
 
 # Set aliases
-alias ls="eza --icons --long"
 alias grep="ugrep"
 alias cd="z"
 alias cat="bat -p"
 alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
-alias update="paru; paru -c"
-alias l="ls --ignore-glob '$([ -f .hidden ] && cat .hidden | tr '\n' '|')'"
+alias update="paru; flatpak update"
+alias rc="source ~/.bashrc"
+function ls {
+	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
+		eza --icons --long $@
+	else
+		eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
+	fi
+}
 
+# Dotfiles management
+# TODO: Rewrite to use bash read instead of zsh read
+function .add {
+	if [[ -z $1 || -z $2 ]]; then
+		echo "Usage: .add <file> <message>"
+		return 1
+	fi
+
+	chezmoi add $1
+	chezmoi git add .
+	chezmoi git status
+	read -p "Commit changes? [y/N] " -r answer
+	if [[ $answer =~ ^[Yy]$ ]]; then
+		chezmoi git commit -- -am $2
+		read -p "Push changes? [y/N] " -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
+			chezmoi git push
+		fi
+	fi
+}
+# TODO: Rewrite to use bash read instead of zsh read
+function .re-add {
+	if [[ -z $1 ]]; then
+		echo "Usage: .re-add <message>"
+		return 1
+	fi
+
+	chezmoi re-add
+	chezmoi git status
+	chezmoi git diff
+	read -p "Commit changes? [y/N] " -r answer
+	if [[ $answer =~ ^[Yy]$ ]]; then
+		chezmoi git commit -- -am $1
+		read -p "Push changes? [y/N] " -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
+			chezmoi git push
+		fi
+	fi
+}
+alias .push="chezmoi git push"
+alias .pull="chezmoi git pull"
+alias .status="chezmoi git status"
+alias .diff="chezmoi git diff"
+alias .update="chezmoi update"
 
 # XDG stuff
 export HISTFILE="${XDG_STATE_HOME}"/bash/history
 
+# XDG aliases
+alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
+alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME/yarn/config'"
+alias units="units --history '$XDG_DATA_HOME/units_history'"
+alias nvidia-settings="nvidia-settings --config='$XDG_CONFIG_HOME/nvidia/settings'"
+alias adb="HOME='$XDG_DATA_HOME/android' adb"
+
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
 PS1='[\u@\h \w]\$ '
+
+# Starship after defining custom prompt, easy to remove
+eval "$(starship init bash)"
