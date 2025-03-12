@@ -33,7 +33,7 @@ function .add {
 	chezmoi git status
 	read -p "Commit changes? [y/N] " -r answer
 	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git commit -- -am $2
+		chezmoi git -- commit -m "$2"
 		read -p "Push changes? [y/N] " -r answer
 		if [[ $answer =~ ^[Yy]$ ]]; then
 			chezmoi git push
@@ -52,7 +52,7 @@ function .re-add {
 	chezmoi git diff
 	read -p "Commit changes? [y/N] " -r answer
 	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git commit -- -am $1
+		chezmoi git -- commit -am "$1"
 		read -p "Push changes? [y/N] " -r answer
 		if [[ $answer =~ ^[Yy]$ ]]; then
 			chezmoi git push
