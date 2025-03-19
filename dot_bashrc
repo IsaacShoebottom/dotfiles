@@ -10,6 +10,11 @@ if [[ -f $HOME/.local/bin/bash_completion ]]; then
 	. $HOME/.local/bin/bash_completion
 fi
 
+# Rust
+if [[ -f $HOME/.local/share/cargo/env ]]; then
+	. $HOME/.local/share/cargo/env
+fi
+
 # Set aliases
 alias grep="ugrep"
 alias cd="z"
