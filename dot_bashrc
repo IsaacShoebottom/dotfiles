@@ -7,7 +7,7 @@ eval "$(zoxide init bash)"
 
 # Local bash-completion
 if [[ -f $HOME/.local/bin/bash_completion ]]; then
-	source $HOME/.local/bin/bash_completion
+	. $HOME/.local/bin/bash_completion
 fi
 
 # Set aliases
