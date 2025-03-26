@@ -14,18 +14,31 @@ pushd $HOME/.local/bin > /dev/null
 
 # Handle 7z
 if compgen -G "7z*tar*" > /dev/null; then
+	# Extract 7z
 	tar xf 7z*tar* 7zzs
+	# Remove/rename extracted 7zzs (7z statically linked) to 7z
 	mv -f 7zzs 7z
+	# Remove archive
 	rm -r 7z*tar*
 fi
 
 # Handle bash_completion
 if compgen -G "bash-completion*tar*" > /dev/null; then
+	# Extract bash-completion
 	tar xf bash-completion*tar*
+
+	# Remove old bash_completion
+	rm -r bash_completion bash_completion.d completions
+
+	# Move new bash_completion
 	mv -f bash-completion*/bash_completion .
 	mv -f bash-completion*/bash_completion.d .
 	mv -f bash-completion*/completions .
+
+	# Remove extracted files
 	rm -r bash-completion-*
+
+	# Make bash_completion executable
 	chmod +x bash_completion
 fi
 
