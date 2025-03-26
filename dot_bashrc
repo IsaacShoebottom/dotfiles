@@ -3,7 +3,6 @@
 
 # Required init for cli programs
 # Do not install completions unless no working, check /usr/share/bash-completion
-eval "$(zoxide init bash)"
 
 # Local bash-completion
 if [[ -f $HOME/.local/bin/bash_completion ]]; then
@@ -16,19 +15,27 @@ if [[ -f $HOME/.local/share/cargo/env ]]; then
 fi
 
 # Set aliases
-alias grep="ugrep"
-alias cd="z"
-alias cat="bat -p"
-alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
-alias update="paru; flatpak update"
+if hash rg 2>/dev/null; then
+	alias grep="rg"
+fi
+if hash bat 2>/dev/null; then
+	alias cat="bat -p"
+fi
+if hash zoxide 2>/dev/null; then
+	alias cd="z"
+fi
+alias update="eget -D; . $HOME/.config/eget/post_install.sh"
 alias rc="source ~/.bashrc"
-function ls {
-	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
-		eza --icons --long $@
-	else
-		eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
-	fi
-}
+if hash eza 2>/dev/null; then
+	function ls {
+		if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
+			eza --icons --long $@
+		else
+			eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
+		fi
+	}
+fi
+
 
 # Dotfiles management
 # TODO: Rewrite to use bash read instead of zsh read
@@ -91,3 +98,6 @@ PS1='[\u@\h \w]\$ '
 
 # Starship after defining custom prompt, easy to remove
 eval "$(starship init bash)"
+
+# Zoxide
+eval "$(zoxide init bash)"

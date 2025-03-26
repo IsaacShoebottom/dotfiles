@@ -1,2 +1,52 @@
 [global]
-target = "~/.local/bin"
+	target = "~/.local/bin"
+	upgrade_only = true
+
+["zyedidia/eget"]
+
+["zyedidia/micro"]
+	asset_filters = [ "static", ".tar.gz" , "^sha" ]
+
+["ip7z/7zip"]
+	# Currently not working as 7zip packages use xz filters unsupported by eget/xz go library
+	#file = "7zzs"
+	#target = "~/.local/bin/7z"
+	download_only = true
+
+["sharkdp/bat"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["BurntSushi/ripgrep"]
+
+["sharkdp/fd"]
+	asset_filters = [ "gnu" ]
+
+["sharkdp/hyperfine"]
+	asset_filters = [ "gnu" ]
+
+["ajeetdsouza/zoxide"]
+
+["neovim/neovim"]
+	asset_filters = [ "x86_64" ]
+	target = "~/.local/bin/nvim"
+
+["konosubakonoakua/ncdu-zig"]
+	target = "~/.local/bin/ncdu"
+
+["eza-community/eza"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["starship/starship"]
+	asset_filters = [ "gnu" ]
+
+["Byron/dua-cli"]
+
+["doy/rbw"]
+
+["twpayne/chezmoi"]
+	asset_filters = [ "glibc", ".tar.gz" ]
+
+["scop/bash-completion"]
+	# Needs manual intervention to install, as its a bash script with a subfolder containing completions
+	download_only = true
+	asset_filters = [ ".tar.xz" ]
