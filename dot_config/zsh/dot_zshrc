@@ -16,11 +16,12 @@ bindkey '^[[F' end-of-line
 bindkey "^[[3~" delete-char
 
 # Set aliases
-alias grep="ug"
+alias grep="rg"
 alias cd="z"
 alias cat="bat -p"
 alias find="fd"
 alias bc="numbat"
+alias start="xdg-open"
 alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
 alias update="paru; flatpak update"
 alias rc="source ~/.config/zsh/.zshrc"
