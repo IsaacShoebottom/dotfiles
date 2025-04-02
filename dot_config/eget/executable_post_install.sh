@@ -45,5 +45,9 @@ fi
 # Handle shared libraries
 rsync --remove-source-files $(fd --glob "*.so*") ../lib
 
+# Gen Desktop file for firefox appimage
+gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
+rsync --remove-source-files firefox.desktop ../share/applications
+
 # Unchange directory
 popd > /dev/null

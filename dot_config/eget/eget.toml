@@ -63,3 +63,6 @@
 #["romkatv/zsh-bin"]
 #	asset_filters = [ "^asc" ]
 #	all = true
+
+["xyproto/gendesk"]
+	asset_filters = [ "static" ]
