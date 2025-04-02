@@ -72,3 +72,9 @@
 ["valicm/VSCode-AppImage"]
 	asset_filters = [ ".AppImage", "^zsync" ]
 	target = "~/.local/bin/code"
+
+#["containers/podman"]
+#	target = "~/.local/bin/podman"
+
+#["89luca89/lilipod"]
+#	target = "~/.local/bin/lilipod"
