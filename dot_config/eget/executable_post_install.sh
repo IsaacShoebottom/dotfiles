@@ -62,17 +62,15 @@ fi
 
 
 
-# Gen Desktop file for firefox appimage
+# Gen Desktop files
 gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox %u" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
-rsync --remove-source-files firefox.desktop ../share/applications
-
-# Gen Desktop file for neovide
 gendesk -f -n --pkgname "neovide" --name "Neovide" --exec "neovide %F" --icon "neovide" --categories "TextEditor;Development" --comment "Neovim GUI" --genericname "Neovim GUI"
-rsync --remove-source-files neovide.desktop ../share/applications
-
-# Gen Desktop file for code
 gendesk -f -n --pkgname "code" --name "Visual Studio Code" --exec "code %F" --icon "vscode" --categories "TextEditor;Development" --comment "Visual Studio Code" --genericname "Code Editor"
-rsync --remove-source-files code.desktop ../share/applications
+gendesk -f -n --pkgname "kitty" --name "Kitty" --exec "kitty" --icon "kitty" --categories "Utility" --comment "Kitty Terminal Emulator" --genericname "Terminal Emulator"
+gendesk -f -n --pkgname "micro" --name "Micro" --exec "micro %F" --icon "micro" --categories "TextEditor;Development" --comment "Micro Text Editor" --genericname "Text Editor" --terminal=true
+
+# Move desktop files to applications directory
+rsync --remove-source-files *.desktop ../share/applications
 
 # Unchange directory
 popd > /dev/null
