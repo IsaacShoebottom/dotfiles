@@ -58,7 +58,7 @@
 
 ["BtbN/FFmpeg-Builds"]
 	asset_filters = [ "^lgpl", "shared", "master", ".tar.xz" ]
-	all = true
+	download_only = true # Shared libraries aren't extracted correctly, need to do in post install script
 
 #["romkatv/zsh-bin"]
 #	asset_filters = [ "^asc" ]

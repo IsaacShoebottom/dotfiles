@@ -42,8 +42,25 @@ if compgen -G "bash-completion*tar*" > /dev/null; then
 	chmod +x bash_completion
 fi
 
-# Handle shared libraries
-rsync --remove-source-files $(fd --glob "*.so*") ../lib
+if compgen -G "ffmpeg*tar*" > /dev/null; then
+	# Extract ffmpeg
+	tar xf ffmpeg*tar*
+
+	# Handle shared libraries
+	rsync --remove-source-files --links $(fd --glob "*.so*") ../lib
+
+	# Binaries
+	mv -f ffmpeg*/bin/* .
+
+	# Remove archive
+	rm -r ffmpeg*tar*
+
+	# Remove extracted files
+	rm -r ffmpeg-*
+fi
+
+
+
 
 # Gen Desktop file for firefox appimage
 gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
