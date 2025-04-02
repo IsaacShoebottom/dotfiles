@@ -60,9 +60,10 @@
 	asset_filters = [ "^lgpl", "shared", "master", ".tar.xz" ]
 	download_only = true # Shared libraries aren't extracted correctly, need to do in post install script
 
-#["romkatv/zsh-bin"]
-#	asset_filters = [ "^asc" ]
+["romkatv/zsh-bin"]
+	asset_filters = [ "^asc" ]
 #	all = true
+	file = "bin/zsh"
 
 ["xyproto/gendesk"]
 	asset_filters = [ "static" ]
@@ -92,3 +93,7 @@
 	asset_filters = [ "gnu", ".tar.gz" ]
 
 ["tealdeer-rs/tealdeer"]
+
+["nushell/nushell"]
+	asset_filters = [ "musl", ".tar.gz" ]
+	all = true
