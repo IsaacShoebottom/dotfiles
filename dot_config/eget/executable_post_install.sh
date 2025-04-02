@@ -49,5 +49,13 @@ rsync --remove-source-files $(fd --glob "*.so*") ../lib
 gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
 rsync --remove-source-files firefox.desktop ../share/applications
 
+# Gen Desktop file for neovide
+gendesk -f -n --pkgname "neovide" --name "Neovide" --exec "neovide" --icon "neovide" --categories "TextEditor;Development" --comment "Neovim GUI" --genericname "Neovim GUI"
+rsync --remove-source-files neovide.desktop ../share/applications
+
+# Gen Desktop file for code
+gendesk -f -n --pkgname "code" --name "Visual Studio Code" --exec "code" --icon "vscode" --categories "TextEditor;Development" --comment "Visual Studio Code" --genericname "Code Editor"
+rsync --remove-source-files code.desktop ../share/applications
+
 # Unchange directory
 popd > /dev/null

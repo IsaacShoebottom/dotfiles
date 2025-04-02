@@ -66,3 +66,9 @@
 
 ["xyproto/gendesk"]
 	asset_filters = [ "static" ]
+
+["neovide/neovide"]
+
+["valicm/VSCode-AppImage"]
+	asset_filters = [ ".AppImage", "^zsync" ]
+	target = "~/.local/bin/code"
