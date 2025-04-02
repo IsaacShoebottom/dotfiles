@@ -63,15 +63,15 @@ fi
 
 
 # Gen Desktop file for firefox appimage
-gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
+gendesk -f -n --pkgname "firefox" --name "Firefox" --exec "firefox %u" --icon "firefox" --categories "Network" --comment "Firefox Web Browser" --genericname "Web Browser"
 rsync --remove-source-files firefox.desktop ../share/applications
 
 # Gen Desktop file for neovide
-gendesk -f -n --pkgname "neovide" --name "Neovide" --exec "neovide" --icon "neovide" --categories "TextEditor;Development" --comment "Neovim GUI" --genericname "Neovim GUI"
+gendesk -f -n --pkgname "neovide" --name "Neovide" --exec "neovide %F" --icon "neovide" --categories "TextEditor;Development" --comment "Neovim GUI" --genericname "Neovim GUI"
 rsync --remove-source-files neovide.desktop ../share/applications
 
 # Gen Desktop file for code
-gendesk -f -n --pkgname "code" --name "Visual Studio Code" --exec "code" --icon "vscode" --categories "TextEditor;Development" --comment "Visual Studio Code" --genericname "Code Editor"
+gendesk -f -n --pkgname "code" --name "Visual Studio Code" --exec "code %F" --icon "vscode" --categories "TextEditor;Development" --comment "Visual Studio Code" --genericname "Code Editor"
 rsync --remove-source-files code.desktop ../share/applications
 
 # Unchange directory

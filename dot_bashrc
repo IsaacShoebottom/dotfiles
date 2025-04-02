@@ -42,6 +42,10 @@ fi
 if hash hexyl 2>/dev/null; then
 	alias xxd="hexyl"
 fi
+if hash micro 2>/dev/null; then
+	alias edit="micro"
+	alias nano="micro"
+fi
 if hash xdg-open 2>/dev/null; then
 	alias start="xdg-open"
 fi
