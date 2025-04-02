@@ -3,7 +3,6 @@
 
 # Required init for cli programs
 # Do not install completions unless no working, check /usr/share/bash-completion
-eval "$(zoxide init zsh)"
 autoload -Uz promptinit
 autoload -Uz compinit
 promptinit
@@ -44,12 +43,14 @@ function .add {
 		return 1
 	fi
 
-	chezmoi add $1
+	chezmoi add "$1"
 	chezmoi git add .
 	chezmoi git status
-	if $(read -q "?Commit changes? [y/N]"); then
-		chezmoi git commit -- -am $2
-		if $(read -q "?Push changes? [y/N]"); then
+	read -p "Commit changes? [y/N] " -r answer
+	if [[ $answer =~ ^[Yy]$ ]]; then
+		chezmoi git commit -- -am "$2"
+		read -p "Push changes? [y/N] " -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
 			chezmoi git push
 		fi
 	fi
@@ -63,9 +64,11 @@ function .re-add {
 	chezmoi re-add
 	chezmoi git status
 	chezmoi git diff
-	if $(read -q "?Commit changes? [y/N]"); then
-		chezmoi git commit -- -am $1
-		if $(read -q "?Push changes? [y/N]"); then
+	read -p "Commit changes? [y/N] " -r answer
+	if [[ $answer =~ ^[Yy]$ ]]; theno
+		chezmoi git commit -- -am "$1"
+		read -p "Push changes? [y/N] " -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
 			chezmoi git push
 		fi
 	fi
@@ -94,3 +97,6 @@ RPROMPT="%?:%h | %*"
 
 # Starship after defining custom prompt, easy to remove
 eval "$(starship init zsh)"
+
+# Zoxide
+eval "$(zoxide init zsh)"
