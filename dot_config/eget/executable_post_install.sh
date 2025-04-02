@@ -43,7 +43,7 @@ if compgen -G "bash-completion*tar*" > /dev/null; then
 fi
 
 # Handle shared libraries
-mv -f $(fd --glob "*.so*") ../lib
+rsync --remove-source-files $(fd --glob "*.so*") ../lib
 
 # Unchange directory
 popd > /dev/null

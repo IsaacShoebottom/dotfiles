@@ -53,9 +53,13 @@
 
 # ["srevinsaju/Firefox-Appimage"]
 #    target = "~/.local/bin/firefox"
-# 	tag = "firefox"
-# 	asset_filters = [ ".AppImage", "^zsync" ]
+# 	 tag = "firefox"
+# 	 asset_filters = [ ".AppImage", "^zsync" ]
 
 ["BtbN/FFmpeg-Builds"]
 	asset_filters = [ "^lgpl", "shared", "master", ".tar.xz" ]
 	all = true
+
+# ["romkatv/zsh-bin"]
+# 	 asset_filters = [ "^asc" ]
+#	 all = true
