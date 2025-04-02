@@ -50,3 +50,12 @@
 	# Needs manual intervention to install, as its a bash script with a subfolder containing completions
 	download_only = true
 	asset_filters = [ ".tar.xz" ]
+
+# ["srevinsaju/Firefox-Appimage"]
+#    target = "~/.local/bin/firefox"
+# 	tag = "firefox"
+# 	asset_filters = [ ".AppImage", "^zsync" ]
+
+["BtbN/FFmpeg-Builds"]
+	asset_filters = [ "^lgpl", "shared", "master", ".tar.xz" ]
+	all = true
