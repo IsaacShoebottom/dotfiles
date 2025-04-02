@@ -78,3 +78,17 @@
 
 #["89luca89/lilipod"]
 #	target = "~/.local/bin/lilipod"
+
+["sharkdp/numbat"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["sharkdp/hexyl"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["chmln/sd"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["bootandy/dust"]
+	asset_filters = [ "gnu", ".tar.gz" ]
+
+["tealdeer-rs/tealdeer"]

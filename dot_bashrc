@@ -24,6 +24,27 @@ fi
 if hash zoxide 2>/dev/null; then
 	alias cd="z"
 fi
+if hash fd 2>/dev/null;then
+	alias find="fd"
+fi
+if hash numbat 2>/dev/null; then
+	alias bc="numbat"
+fi
+if hash sd 2>/dev/null; then
+	alias sed="sd"
+fi
+if hash dust 2>/dev/null; then
+	alias du="dust"
+fi
+if hash tealdeer 2>/dev/null; then
+	alias tldr="tealdeer"
+fi
+if hash hexyl 2>/dev/null; then
+	alias hexdump="hexyl"
+fi
+if hash xdg-open 2>/dev/null; then
+	alias start="xdg-open"
+fi
 alias update="eget -D; . $HOME/.config/eget/post_install.sh"
 alias rc="source ~/.bashrc"
 if hash eza 2>/dev/null; then
