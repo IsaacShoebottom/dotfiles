@@ -40,7 +40,7 @@ if hash tealdeer 2>/dev/null; then
 	alias tldr="tealdeer"
 fi
 if hash hexyl 2>/dev/null; then
-	alias hexdump="hexyl"
+	alias xxd="hexyl"
 fi
 if hash xdg-open 2>/dev/null; then
 	alias start="xdg-open"
