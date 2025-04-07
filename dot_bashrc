@@ -30,9 +30,9 @@ fi
 if hash numbat 2>/dev/null; then
 	alias bc="numbat"
 fi
-if hash sd 2>/dev/null; then
-	alias sed="sd"
-fi
+#if hash sd 2>/dev/null; then
+#	alias sed="sd"
+#fi
 if hash dust 2>/dev/null; then
 	alias du="dust"
 fi
