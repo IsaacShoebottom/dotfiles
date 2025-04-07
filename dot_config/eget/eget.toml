@@ -98,7 +98,7 @@
 	asset_filters = [ "musl", ".tar.gz" ]
 	all = true
 
-# TODO: Currently broken, think it downloads wrong executable
+# TODO: Change to no extract so I can setup shared librarys and terminfo etc, as well as get kitten binary
 ["kovidgoyal/kitty"]
-	asset_filters = [ "^sig" ]
+	asset_filters = [ "^sig", "^kitten", "x86_64" ]
 
