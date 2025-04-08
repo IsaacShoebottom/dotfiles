@@ -17,5 +17,16 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
+alias corels = ls
+
+def --wrapped ls [...rest] {
+	if '-a' in $rest or '--all' in $rest or not (".hidden" | path exists) {
+		(corels ...$rest)
+	} else {
+		(corels ...$rest) | where name not-in (cat .hidden)
+	}
+}
+
+
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
