@@ -102,3 +102,9 @@
 ["kovidgoyal/kitty"]
 	asset_filters = [ "^sig", "^kitten", "x86_64" ]
 
+["nix-community/nix-user-chroot"]
+	asset_filters = [ "x86_64", "musl" ]
+
+["fish-shell/fish-shell"]
+	asset_filters = [ "x86_64", "static" ]
+	all = true

@@ -51,6 +51,10 @@ if hash xdg-open 2>/dev/null; then
 fi
 alias update="eget -D; . $HOME/.config/eget/post_install.sh"
 alias rc="source ~/.bashrc"
+alias nix-shell-local="nix-user-chroot ~/.local/share/nix bash"
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then 
+	. ~/.nix-profile/etc/profile.d/nix.sh
+fi
 if hash eza 2>/dev/null; then
 	function ls {
 		if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
