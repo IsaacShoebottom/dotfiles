@@ -27,9 +27,21 @@ alias xxd="hexyl"
 alias start="xdg-open"
 alias edit="micro"
 alias nano="micro"
+alias gallery-dl="gallery-dl --cookies-from-browser firefox"
 alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
-alias update="paru; flatpak update"
+alias update="paru; paru -c; flatpak update"
 alias rc="source ~/.config/zsh/.zshrc"
+function clamav-exception-add {
+	if [[ -z $1 ]]; then
+		echo "Usage: clamav-exception-add <file>"
+		return 1
+	fi
+	if [[ ! -f $1 ]]; then
+		echo "File not found: $1"
+		return 1
+	fi
+	sudo bash -c "sigtool --sha256 "$1" >> /var/lib/clamav/user-defined-exceptions.sfp"
+}
 function ls {
 	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
 		eza --icons --long $@
