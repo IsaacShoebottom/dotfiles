@@ -13,6 +13,11 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # https://github.com/pkasemir/find-the-command
 source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
 
+# Alternative
+# pkgfile
+# https://wiki.archlinux.org/title/Pkgfile#Command_not_found
+# source /usr/share/doc/pkgfile/command-not-found.zsh
+
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey "^[[3~" delete-char
