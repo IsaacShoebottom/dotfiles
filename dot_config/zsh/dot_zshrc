@@ -9,6 +9,9 @@ promptinit
 compinit
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# find-the-command
+# https://github.com/pkasemir/find-the-command
+source /usr/share/doc/find-the-command/ftc.zsh
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
