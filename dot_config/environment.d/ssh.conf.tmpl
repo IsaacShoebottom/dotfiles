@@ -1,0 +1,5 @@
+SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+{{ if lookPath "ksshaskpass" -}}
+SSH_ASKPASS={{- lookPath "ksshaskpass" }}
+SSH_ASKPASS_REQUIRE=prefer
+{{- end -}}
