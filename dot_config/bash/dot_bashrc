@@ -6,7 +6,7 @@
 
 # Workaround for SSH/Login sessions
 # https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
-if [[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
+if shopt -q login_shell && [[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
 	set -a
 	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
 	set +a
