@@ -1,0 +1,142 @@
+# shellcheck shell=bash
+# shellcheck disable=SC1090,SC1091,SC2034
+
+# Set aliases
+hash rg 2>/dev/null && alias grep="rg"
+hash bat 2>/dev/null && alias cat="bat -p"
+hash zoxide 2>/dev/null && alias cd="z"
+hash fd 2>/dev/null && alias find="fd"
+hash numbat 2>/dev/null && alias bc="numbat"
+# hash sd 2>/dev/null && alias sed="sd" # Disabled because some scripts use sed, and don't set the -i flag
+hash dust 2>/dev/null && alias du="dust"
+hash tealdeer 2>/dev/null && alias tldr="tealdeer"
+hash hexyl 2>/dev/null && alias xxd="hexyl"
+hash micro 2>/dev/null && alias edit="micro" && alias nano="micro"
+hash xdg-open 2>/dev/null && alias start="xdg-open"
+hash gallery-dl 2>/dev/null && alias gallery-dl="gallery-dl --cookies-from-browser firefox"
+
+if [[ -n $BASH_VERSION ]]; then
+	alias rc='source "$XDG_CONFIG_HOME"/bash/.bashrc'
+elif [[ -n $ZSH_VERSION ]]; then
+	alias rc='source "$XDG_CONFIG_HOME"/zsh/.zshrc'
+fi
+
+if hash lsb_release 2>/dev/null; then
+    if [[ $(lsb_release -si) =~ "Arch" ]]; then
+		alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
+		# System package managers
+		hash pacman 2>/dev/null && command="sudo pacman -Syu; sudo pacman -Sc;"
+		hash pamac 2>/dev/null && command="pamac update; pamac clean;"
+		hash yay 2>/dev/null && command="yay; yay -Sc;"
+		hash paru 2>/dev/null && command="paru; paru -c;"
+
+		# Non system packages
+		hash flatpak 2>/dev/null && command+="flatpak update; flatpak uninstall --unused;"
+
+		# We want this to be expanded to the command, as the command is not very helpful
+		# shellcheck disable=SC2139
+		alias update="$command"
+	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
+		# Unset on Debian/Ubuntu
+		# alias update-mirrors=""
+
+		# System package managers
+		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove;"
+
+		# Non system packages
+		hash flatpak 2>/dev/null && command+="flatpak update; flatpak uninstall --unused;"
+
+		# We want this to be expanded to the command, as the command is not very helpful
+		# shellcheck disable=SC2139
+		alias update="$command"
+	fi
+# Non privaledged environemnt, have to use local package managers like eget, nix, etc
+else
+	alias update-mirrors="echo 'No mirrors to update'"
+	alias update='eget -D; . "$HOME"/.config/eget/post_install.sh'
+	alias nix-shell-local="nix-user-chroot ~/.local/share/nix bash"
+
+	if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+	. ~/.nix-profile/etc/profile.d/nix.sh
+	fi
+fi
+
+if hash eza 2>/dev/null; then
+	function ls {
+		if [[ "$*" =~ "-a" || "$*" =~ "-A" || "$*" =~ "--all" || "$*" =~ "--almost-all" ]]; then
+			eza --icons --long "$@"
+		else
+			eza --icons --long --ignore-glob "$([[ -f .hidden ]] && < .hidden  tr '\n' '|')" "$@"
+		fi
+	}
+fi
+
+function clamav-exception-add {
+	if [[ -z $1 ]]; then
+		echo "Usage: clamav-exception-add <file>"
+		return 1
+	fi
+	if [[ ! -f $1 ]]; then
+		echo "File not found: $1"
+		return 1
+	fi
+	sudo bash -c "sigtool --sha256 $1 >> /var/lib/clamav/user-defined-exceptions.sfp"
+}
+
+# Dotfiles management
+# TODO: Rewrite to use bash read instead of zsh read
+if hash chezmoi 2>/dev/null; then
+	function .add {
+		if [[ -z $1 || -z $2 ]]; then
+			echo "Usage: .add <file> <message>"
+			return 1
+		fi
+
+		chezmoi add "$1"
+		chezmoi git add .
+		chezmoi git status
+		echo -n "Commit changes? [y/N] "
+		read -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
+			chezmoi git -- commit -m "$2"
+			echo -n "Push changes? [y/N] "
+			read -r answer
+			if [[ $answer =~ ^[Yy]$ ]]; then
+				chezmoi git push
+			fi
+		fi
+	}
+	# TODO: Rewrite to use bash read instead of zsh read
+	function .re-add {
+		if [[ -z $1 ]]; then
+			echo "Usage: .re-add <message>"
+			return 1
+		fi
+
+		chezmoi re-add
+		chezmoi git status
+		chezmoi git diff
+		echo -n "Commit changes? [y/N] "
+		read -r answer
+		if [[ $answer =~ ^[Yy]$ ]]; then
+			chezmoi git -- commit -am "$1"
+			echo -n "Push changes? [y/N] "
+			read -r answer
+			if [[ $answer =~ ^[Yy]$ ]]; then
+				chezmoi git push
+			fi
+		fi
+	}
+	alias .push="chezmoi git push"
+	alias .pull="chezmoi git pull"
+	alias .status="chezmoi git status"
+	alias .diff="chezmoi git diff"
+	alias .update="chezmoi update"
+fi
+
+# XDG aliases
+alias wget='wget --hsts-file="$XDG_DATA_HOME"/wget-hsts'
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME"/yarn/config'
+alias units='units --history "$XDG_DATA_HOME"/units_history'
+alias nvidia-settings='nvidia-settings --config="$XDG_CONFIG_HOME"/nvidia/settings'
+alias adb='HOME="$XDG_DATA_HOME"/android adb'
