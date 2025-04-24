@@ -6,4 +6,4 @@ if (! `which starship >& /dev/null`) eval `starship init tcsh`
 
 # Just use bash
 set SHELL = "/bin/bash"
-exec $SHELL
+exec $SHELL -l
