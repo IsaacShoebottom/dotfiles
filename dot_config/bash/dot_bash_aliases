@@ -40,10 +40,12 @@ if hash lsb_release 2>/dev/null; then
 		alias update="$command"
 	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
 		# Unset on Debian/Ubuntu
-		# alias update-mirrors=""
+		alias update-mirrors="sudo nala fetch --auto -c US -c CA"
 
 		# System package managers
 		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove;"
+		hash aptitude 2>/dev/null && command="sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove;"
+		hash nala 2>/dev/null && command="sudo nala update && sudo nala upgrade && sudo nala autoremove;"
 
 		# Non system packages
 		hash flatpak 2>/dev/null && command+="flatpak update; flatpak uninstall --unused;"
