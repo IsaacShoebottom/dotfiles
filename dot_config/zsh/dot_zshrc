@@ -1,116 +1,41 @@
+# shellcheck shell=bash
+# shellcheck disable=SC1090,SC1091,SC2034
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Required init for cli programs
-# Do not install completions unless no working, check /usr/share/bash-completion
+[[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
+
 autoload -Uz promptinit
 autoload -Uz compinit
 promptinit
-compinit
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+# Some zsh plugins
+[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # find-the-command
 # https://github.com/pkasemir/find-the-command
-source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
+[[ -f /usr/share/doc/find-the-command/ftc.zsh ]] && \
+  source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
 
-# Alternative
-# pkgfile
+# Alternative (pkgfile)
 # https://wiki.archlinux.org/title/Pkgfile#Command_not_found
-# source /usr/share/doc/pkgfile/command-not-found.zsh
+# [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]] && \
+#   source /usr/share/doc/pkgfile/command-not-found.zsh
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey "^[[3~" delete-char
 
-# Set aliases
-alias grep="rg"
-alias cd="z"
-alias cat="bat -p"
-alias find="fd"
-alias bc="numbat"
-#alias sed="sd"
-alias du="dust"
-alias tldr="tldr"
-alias xxd="hexyl"
-alias start="xdg-open"
-alias edit="micro"
-alias nano="micro"
-alias gallery-dl="gallery-dl --cookies-from-browser firefox"
-alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
-alias update="paru; paru -c; flatpak update"
-alias rc="source ~/.config/zsh/.zshrc"
-function clamav-exception-add {
-	if [[ -z $1 ]]; then
-		echo "Usage: clamav-exception-add <file>"
-		return 1
-	fi
-	if [[ ! -f $1 ]]; then
-		echo "File not found: $1"
-		return 1
-	fi
-	sudo bash -c "sigtool --sha256 "$1" >> /var/lib/clamav/user-defined-exceptions.sfp"
-}
-function ls {
-	if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
-		eza --icons --long $@
-	else
-		eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
-	fi
-}
 
-# Dotfiles management
-function .add {
-	if [[ -z $1 || -z $2 ]]; then
-		echo "Usage: .add <file> <message>"
-		return 1
-	fi
-
-	chezmoi add "$1"
-	chezmoi git add .
-	chezmoi git status
-	read -r "Commit changes? [y/N] " answer
-	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git commit -- -am "$2"
-		read -r "Push changes? [y/N] " answer
-		if [[ $answer =~ ^[Yy]$ ]]; then
-			chezmoi git push
-		fi
-	fi
-}
-function .re-add {
-	if [[ -z $1 ]]; then
-		echo "Usage: .re-add <message>"
-		return 1
-	fi
-
-	chezmoi re-add
-	chezmoi git status
-	chezmoi git diff
-	read -r "?Commit changes? [y/N] " answer
-	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git commit -- -am "$1"
-		read -r "?Push changes? [y/N] " answer
-		if [[ $answer =~ ^[Yy]$ ]]; then
-			chezmoi git push
-		fi
-	fi
-}
-alias .push="chezmoi git push"
-alias .pull="chezmoi git pull"
-alias .status="chezmoi git status"
-alias .diff="chezmoi git diff"
-alias .update="chezmoi update"
-
-# XDG zsh stuff
-compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+# Zsh XDG history
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 
-# XDG aliases
-alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
-alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME/yarn/config'"
-alias units="units --history '$XDG_DATA_HOME/units_history'"
-alias nvidia-settings="nvidia-settings --config='$XDG_CONFIG_HOME/nvidia/settings'"
-alias adb="HOME='$XDG_DATA_HOME/android' adb"
 
 # Helpful tool: https://zsh-prompt-generator.site/
 # On github: https://github.com/k-yokoishi/zsh-prompt-generator
@@ -120,5 +45,5 @@ RPROMPT="%?:%h | %*"
 # Starship after defining custom prompt, easy to remove
 eval "$(starship init zsh)"
 
-# Zoxide
+# Zoxide init has to be last
 eval "$(zoxide init zsh)"

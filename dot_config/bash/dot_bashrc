@@ -1,125 +1,23 @@
+# shellcheck shell=bash
+# shellcheck disable=SC1090,SC1091,SC2034
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Required init for cli programs
-# Do not install completions unless no working, check /usr/share/bash-completion
+source "$XDG_CONFIG_HOME/bash/.bash_aliases"
 
-# Local bash-completion
+# If we have local bash-completion, use it
 if [[ -f $HOME/.local/bin/bash_completion ]]; then
-	. $HOME/.local/bin/bash_completion
+	. "$HOME/.local/bin/bash_completion"
 fi
 
-# Rust
+# If we have local rust installed, set it up
 if [[ -f $HOME/.local/share/cargo/env ]]; then
-	. $HOME/.local/share/cargo/env
+	. "$HOME/.local/share/cargo/env"
 fi
 
-# Set aliases
-if hash rg 2>/dev/null; then
-	alias grep="rg"
-fi
-if hash bat 2>/dev/null; then
-	alias cat="bat -p"
-fi
-if hash zoxide 2>/dev/null; then
-	alias cd="z"
-fi
-if hash fd 2>/dev/null;then
-	alias find="fd"
-fi
-if hash numbat 2>/dev/null; then
-	alias bc="numbat"
-fi
-#if hash sd 2>/dev/null; then
-#	alias sed="sd"
-#fi
-if hash dust 2>/dev/null; then
-	alias du="dust"
-fi
-if hash tealdeer 2>/dev/null; then
-	alias tldr="tealdeer"
-fi
-if hash hexyl 2>/dev/null; then
-	alias xxd="hexyl"
-fi
-if hash micro 2>/dev/null; then
-	alias edit="micro"
-	alias nano="micro"
-fi
-if hash xdg-open 2>/dev/null; then
-	alias start="xdg-open"
-fi
-alias update="eget -D; . $HOME/.config/eget/post_install.sh"
-alias rc="source ~/.bashrc"
-alias nix-shell-local="nix-user-chroot ~/.local/share/nix bash"
-if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then 
-	. ~/.nix-profile/etc/profile.d/nix.sh
-fi
-if hash eza 2>/dev/null; then
-	function ls {
-		if [[ "$@" =~ "-a" || "$@" =~ "-A" || "$@" =~ "--all" || "$@" =~ "--almost-all" ]]; then
-			eza --icons --long $@
-		else
-			eza --icons --long --ignore-glob "$([[ -f .hidden ]] && cat .hidden | tr '\n' '|')" $@
-		fi
-	}
-fi
-
-
-# Dotfiles management
-# TODO: Rewrite to use bash read instead of zsh read
-function .add {
-	if [[ -z $1 || -z $2 ]]; then
-		echo "Usage: .add <file> <message>"
-		return 1
-	fi
-
-	chezmoi add $1
-	chezmoi git add .
-	chezmoi git status
-	read -p "Commit changes? [y/N] " -r answer
-	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git -- commit -m "$2"
-		read -p "Push changes? [y/N] " -r answer
-		if [[ $answer =~ ^[Yy]$ ]]; then
-			chezmoi git push
-		fi
-	fi
-}
-# TODO: Rewrite to use bash read instead of zsh read
-function .re-add {
-	if [[ -z $1 ]]; then
-		echo "Usage: .re-add <message>"
-		return 1
-	fi
-
-	chezmoi re-add
-	chezmoi git status
-	chezmoi git diff
-	read -p "Commit changes? [y/N] " -r answer
-	if [[ $answer =~ ^[Yy]$ ]]; then
-		chezmoi git -- commit -am "$1"
-		read -p "Push changes? [y/N] " -r answer
-		if [[ $answer =~ ^[Yy]$ ]]; then
-			chezmoi git push
-		fi
-	fi
-}
-alias .push="chezmoi git push"
-alias .pull="chezmoi git pull"
-alias .status="chezmoi git status"
-alias .diff="chezmoi git diff"
-alias .update="chezmoi update"
-
-# XDG stuff
-export HISTFILE="${XDG_STATE_HOME}"/bash/history
-
-# XDG aliases
-alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
-alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME/yarn/config'"
-alias units="units --history '$XDG_DATA_HOME/units_history'"
-alias nvidia-settings="nvidia-settings --config='$XDG_CONFIG_HOME/nvidia/settings'"
-alias adb="HOME='$XDG_DATA_HOME/android' adb"
+# Bash XDG history
+export HISTFILE="$XDG_STATE_HOME"/bash/history
 
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
@@ -128,5 +26,5 @@ PS1='[\u@\h \w]\$ '
 # Starship after defining custom prompt, easy to remove
 eval "$(starship init bash)"
 
-# Zoxide
+# Zoxide init has to be last
 eval "$(zoxide init bash)"
