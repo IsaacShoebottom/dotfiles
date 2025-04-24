@@ -2,7 +2,7 @@
 # shellcheck disable=SC1090,SC1091,SC2034
 
 # Set aliases
-hash rg 2>/dev/null && alias grep="rg"
+hash ug 2>/dev/null && alias grep="ug"
 hash bat 2>/dev/null && alias cat="bat -p"
 hash zoxide 2>/dev/null && alias cd="z"
 hash fd 2>/dev/null && alias find="fd"
