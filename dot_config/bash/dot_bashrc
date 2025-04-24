@@ -4,17 +4,12 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-source "$XDG_CONFIG_HOME/bash/.bash_aliases"
+# Workaround for SSH/Login sessions
+# https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
+[[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]] && export "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
 
 # If we have local bash-completion, use it
-if [[ -f $HOME/.local/bin/bash_completion ]]; then
-	. "$HOME/.local/bin/bash_completion"
-fi
-
-# If we have local rust installed, set it up
-if [[ -f $HOME/.local/share/cargo/env ]]; then
-	. "$HOME/.local/share/cargo/env"
-fi
+[[ -f $HOME/.local/bin/bash_completion ]] && . "$HOME/.local/bin/bash_completion"
 
 # Bash XDG history
 export HISTFILE="$XDG_STATE_HOME"/bash/history
@@ -23,8 +18,4 @@ export HISTFILE="$XDG_STATE_HOME"/bash/history
 # On github: https://github.com/Scriptim/bash-prompt-generator
 PS1='[\u@\h \w]\$ '
 
-# Starship after defining custom prompt, easy to remove
-eval "$(starship init bash)"
-
-# Zoxide init has to be last
-eval "$(zoxide init bash)"
+[[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"

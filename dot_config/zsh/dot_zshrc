@@ -4,29 +4,18 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-[[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
+# Workaround for SSH/Login sessions
+# https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
+[[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]] && export "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
 
 autoload -Uz promptinit
 autoload -Uz compinit
-promptinit
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+promptinit
 
 # Some zsh plugins
-[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
-	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-[[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
-	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# find-the-command
-# https://github.com/pkasemir/find-the-command
-[[ -f /usr/share/doc/find-the-command/ftc.zsh ]] && \
-  source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
-
-# Alternative (pkgfile)
-# https://wiki.archlinux.org/title/Pkgfile#Command_not_found
-# [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]] && \
-#   source /usr/share/doc/pkgfile/command-not-found.zsh
+[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
@@ -40,8 +29,4 @@ export HISTFILE="$XDG_STATE_HOME"/zsh/history
 PROMPT="[%n@%m %~]$ "
 RPROMPT="%?:%h | %*"
 
-# Starship after defining custom prompt, easy to remove
-eval "$(starship init zsh)"
-
-# Zoxide init has to be last
-eval "$(zoxide init zsh)"
+[[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
