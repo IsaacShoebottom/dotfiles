@@ -32,10 +32,8 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey "^[[3~" delete-char
 
-
 # Zsh XDG history
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
-
 
 # Helpful tool: https://zsh-prompt-generator.site/
 # On github: https://github.com/k-yokoishi/zsh-prompt-generator
