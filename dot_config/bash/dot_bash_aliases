@@ -2,13 +2,14 @@
 # shellcheck disable=SC1090,SC1091,SC2034
 
 # Set aliases
-hash ug 2>/dev/null && alias grep="ug"
+hash ug 2>/dev/null && alias grep="ugrep"
 hash bat 2>/dev/null && alias cat="bat -p"
 hash zoxide 2>/dev/null && alias cd="z"
 hash fd 2>/dev/null && alias find="fd"
 hash numbat 2>/dev/null && alias bc="numbat"
 # hash sd 2>/dev/null && alias sed="sd" # Disabled because some scripts use sed, and don't set the -i flag
 hash dust 2>/dev/null && alias du="dust"
+hash dua 2>/dev/null && alias duai="dua interactive"
 hash tealdeer 2>/dev/null && alias tldr="tealdeer"
 hash hexyl 2>/dev/null && alias xxd="hexyl"
 hash xdg-open 2>/dev/null && alias start="xdg-open"
