@@ -6,7 +6,11 @@
 
 # Workaround for SSH/Login sessions
 # https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
-[[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]] && export "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
+if [[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
+	set -a
+	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
+	set +a
+fi
 
 # If we have local bash-completion, use it
 [[ -f $HOME/.local/bin/bash_completion ]] && . "$HOME/.local/bin/bash_completion"
