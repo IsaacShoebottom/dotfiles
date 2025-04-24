@@ -18,6 +18,8 @@ Host fcslinux.cs.unb.ca
 # Individual hosts for the CS department
 Host *m??.cs.unb.ca
 	User ishoebot
+	AddKeysToAgent yes
+	ForwardAgent yes
 	ProxyJump fcslinux.cs.unb.ca
 
 # GitHub ssh commits
