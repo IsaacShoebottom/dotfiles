@@ -57,3 +57,6 @@ hash starship 2>/dev/null && eval "$(starship init zsh)"
 
 # Zoxide init has to be last
 hash zoxide 2>/dev/null && eval "$(zoxide init zsh)"
+
+# Return 0 to indicate success that the script has been sourced to completion
+return 0
