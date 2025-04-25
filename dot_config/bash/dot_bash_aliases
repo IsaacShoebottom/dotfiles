@@ -61,7 +61,7 @@ if hash lsb_release 2>/dev/null; then
 elif [[ "$TERMUX_VERSION" ]]; then
 	# Termux, special case
 	alias update-mirrors="termux-change-repo"
-	alias update="pkg update && pkg upgrade && pkg autoremove"
+	alias update="pkg upgrade && pkg autoclean"
 # Non privaledged environemnt, have to use local package managers like eget, nix, etc
 else
 	alias update-mirrors="echo 'No mirrors to update'"
