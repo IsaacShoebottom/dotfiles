@@ -6,11 +6,14 @@
 
 # Workaround for SSH/Login sessions
 # https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
+set -a
 if shopt -q login_shell && [[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
-	set -a
 	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
-	set +a
+# Fallback to to manually parsing environment.d
+elif [[ -n "$XDG_DATA_HOME" && -n "$XDG_CONFIG_HOME" && -n "$XDG_STATE_HOME" && -n "$XDG_CACHE_HOME" ]]; then
+	eval "$(<"$HOME/.config/environment.d/xdg.conf")"
 fi
+set +a
 
 # If we have local bash-completion, use it
 [[ -f $HOME/.local/bin/bash_completion ]] && . "$HOME/.local/bin/bash_completion"
