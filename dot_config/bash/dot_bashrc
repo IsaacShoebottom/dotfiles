@@ -10,7 +10,7 @@ set -a
 if shopt -q login_shell && [[ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
 	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
 # Fallback to to manually parsing environment.d
-elif [[ -n "$XDG_DATA_HOME" && -n "$XDG_CONFIG_HOME" && -n "$XDG_STATE_HOME" && -n "$XDG_CACHE_HOME" ]]; then
+elif [[ -z "$XDG_DATA_HOME" && -z "$XDG_CONFIG_HOME" && -z "$XDG_STATE_HOME" && -z "$XDG_CACHE_HOME" ]]; then
 	eval "$(<"$HOME/.config/environment.d/xdg.conf")"
 fi
 set +a
