@@ -27,6 +27,9 @@ PS1='[\u@\h \w]\$ '
 
 [[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
 
+# Bash specific alias
+alias rc='source "$XDG_CONFIG_HOME"/bash/.bashrc'
+
 # https://github.com/pkasemir/find-the-command
 [[ -f /usr/share/doc/find-the-command/ftc.bash ]] && source /usr/share/doc/find-the-command/ftc.bash noupdate quiet info
 # https://wiki.archlinux.org/title/Pkgfile#Command_not_found

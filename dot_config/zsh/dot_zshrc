@@ -41,6 +41,9 @@ RPROMPT="%?:%h | %*"
 
 [[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
 
+# Zsh specific alias
+alias rc='source "$XDG_CONFIG_HOME"/zsh/.zshrc'
+
 # https://github.com/pkasemir/find-the-command
 [[ -f /usr/share/doc/find-the-command/ftc.zsh ]] && source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
 # https://wiki.archlinux.org/title/Pkgfile#Command_not_found

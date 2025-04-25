@@ -21,12 +21,6 @@ hash nvim 2>/dev/null && alias vim="nvim" && alias vi="nvim"
 hash trash-put 2>/dev/null && alias rm="trash-put" && alias tp="trash-put"
 hash gallery-dl 2>/dev/null && alias gallery-dl="gallery-dl --cookies-from-browser firefox"
 
-if [[ -n $BASH_VERSION ]]; then
-	alias rc='source "$XDG_CONFIG_HOME"/bash/.bashrc'
-elif [[ -n $ZSH_VERSION ]]; then
-	alias rc='source "$XDG_CONFIG_HOME"/zsh/.zshrc'
-fi
-
 if hash lsb_release 2>/dev/null; then
     if [[ $(lsb_release -si) =~ "Arch" ]]; then
 		alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
