@@ -20,6 +20,10 @@ set +a
 
 # Bash XDG history
 export HISTFILE="$XDG_STATE_HOME"/bash/history
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
 
 # Helpful tool: https://bash-prompt-generator.org
 # On github: https://github.com/Scriptim/bash-prompt-generator
