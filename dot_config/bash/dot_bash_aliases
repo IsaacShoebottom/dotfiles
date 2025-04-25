@@ -11,6 +11,7 @@ hash fd 2>/dev/null && alias find="fd"
 # hash fend 2>/dev/null && alias units="fend" # fend's syntax is a bit different from units, don't want to switch yet
 # hash sd 2>/dev/null && alias sed="sd" # Disabled because some scripts use sed, and don't set the -i flag
 hash dust 2>/dev/null && alias du="dust"
+hash erd 2>/dev/null && alias tree="erd"
 hash dua 2>/dev/null && alias duai="dua interactive"
 hash tealdeer 2>/dev/null && alias tldr="tealdeer"
 hash hexyl 2>/dev/null && alias xxd="hexyl"
