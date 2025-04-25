@@ -7,7 +7,7 @@
 # Workaround for SSH/Login sessions
 # https://github.com/systemd/systemd/issues/7641#issuecomment-680694017
 set -a
-if [[ -o login || -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
+if [[ -o login && -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]]; then
 	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
 # Fallback to to manually parsing environment.d
 elif [[ -n "$XDG_DATA_HOME" && -n "$XDG_CONFIG_HOME" && -n "$XDG_STATE_HOME" && -n "$XDG_CACHE_HOME" ]]; then
