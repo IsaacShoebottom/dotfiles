@@ -40,3 +40,14 @@ PROMPT="[%n@%m %~]$ "
 RPROMPT="%?:%h | %*"
 
 [[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
+
+# https://github.com/pkasemir/find-the-command
+[[ -f /usr/share/doc/find-the-command/ftc.zsh ]] && source /usr/share/doc/find-the-command/ftc.zsh noupdate quiet info
+# https://wiki.archlinux.org/title/Pkgfile#Command_not_found
+# [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
+
+# Starship after defining custom prompt, easy to remove
+hash starship 2>/dev/null && eval "$(starship init zsh)"
+
+# Zoxide init has to be last
+hash zoxide 2>/dev/null && eval "$(zoxide init zsh)"

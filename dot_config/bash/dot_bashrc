@@ -26,3 +26,14 @@ export HISTFILE="$XDG_STATE_HOME"/bash/history
 PS1='[\u@\h \w]\$ '
 
 [[ -f $XDG_CONFIG_HOME/bash/.bash_aliases ]] && source "$XDG_CONFIG_HOME/bash/.bash_aliases"
+
+# https://github.com/pkasemir/find-the-command
+[[ -f /usr/share/doc/find-the-command/ftc.bash ]] && source /usr/share/doc/find-the-command/ftc.bash noupdate quiet info
+# https://wiki.archlinux.org/title/Pkgfile#Command_not_found
+# [[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
+
+# Starship after defining custom prompt, easy to remove
+hash starship 2>/dev/null && eval "$(starship init bash)"
+
+# Zoxide init has to be last
+hash zoxide 2>/dev/null && eval "$(zoxide init bash)"
