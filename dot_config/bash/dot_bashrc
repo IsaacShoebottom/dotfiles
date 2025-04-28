@@ -19,10 +19,10 @@ set +a
 [[ -f $HOME/.local/bin/bash_completion ]] && . "$HOME/.local/bin/bash_completion"
 
 # Bash XDG history
-export HISTFILE="$XDG_STATE_HOME"/bash/history
-export HISTSIZE=10000
-export SAVEHIST=10000
-export HISTCONTROL=ignoredups:erasedups
+HISTFILE="$XDG_STATE_HOME"/bash/history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 
 # Helpful tool: https://bash-prompt-generator.org
