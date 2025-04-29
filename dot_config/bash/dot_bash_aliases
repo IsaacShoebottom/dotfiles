@@ -25,33 +25,29 @@ if hash lsb_release 2>/dev/null; then
     if [[ $(lsb_release -si) =~ "Arch" ]]; then
 		alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
 		# System package managers
-		hash pacman 2>/dev/null && command="sudo pacman -Syu; sudo pacman -Sc;"
-		hash pamac 2>/dev/null && command="pamac update; pamac clean;"
-		hash yay 2>/dev/null && command="yay; yay -Sc;"
-		hash paru 2>/dev/null && command="paru; paru -c;"
 
-		# Non system packages
-		hash flatpak 2>/dev/null && command+="flatpak update; flatpak uninstall --unused;"
-
-		# We want this to be expanded to the command, as the command is not very helpful
-		# shellcheck disable=SC2139
-		alias update="$command"
+		hash pacman 2>/dev/null && command="sudo pacman -Syu; sudo pacman -Sc; "
+		hash pamac 2>/dev/null && command="pamac update; pamac clean; "
+		hash yay 2>/dev/null && command="yay; yay -Sc; "
+		hash paru 2>/dev/null && command="paru; paru -c; "
 	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
-		# Unset on Debian/Ubuntu
 		alias update-mirrors="sudo nala fetch --auto -c US -c CA"
 
 		# System package managers
-		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove;"
-		hash aptitude 2>/dev/null && command="sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove;"
-		hash nala 2>/dev/null && command="sudo nala update && sudo nala upgrade && sudo nala autoremove;"
-
-		# Non system packages
-		hash flatpak 2>/dev/null && command+="flatpak update; flatpak uninstall --unused;"
-
-		# We want this to be expanded to the command, as the command is not very helpful
-		# shellcheck disable=SC2139
-		alias update="$command"
+		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove; "
+		hash aptitude 2>/dev/null && command="sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove; "
+		hash nala 2>/dev/null && command="sudo nala update && sudo nala upgrade && sudo nala autoremove; "
 	fi
+	# Non system packages
+	hash flatpak 2>/dev/null && command+="flatpak update && flatpak uninstall --unused; "
+	hash snap 2>/dev/null && command+="sudo snap refresh && sudo snap remove --purge $(snap list --all | awk '/^.*disabled/{print $1}'); "
+
+	# Firmware
+	hash fwupdmgr 2>/dev/null && command+="fwupdmgr refresh --force && fwupdmgr update;"
+
+	# We want this to be expanded to the command, as the command is not very helpful
+	# shellcheck disable=SC2139
+	alias update="$command"
 elif [[ "$TERMUX_VERSION" ]]; then
 	# Termux, special case
 	alias update-mirrors="termux-change-repo"
@@ -77,17 +73,24 @@ if hash eza 2>/dev/null; then
 	}
 fi
 
-function clamav-exception-add {
-	if [[ -z $1 ]]; then
-		echo "Usage: clamav-exception-add <file>"
-		return 1
-	fi
-	if [[ ! -f $1 ]]; then
-		echo "File not found: $1"
-		return 1
-	fi
-	sudo bash -c "sigtool --sha256 $1 >> /var/lib/clamav/user-defined-exceptions.sfp"
-}
+if hash sigtool 2>/dev/null; then
+	# clamav-exception-add <file>
+	# Adds a file to the clamav user-defined exceptions list
+	# Usage: clamav-exception-add <file>
+	# Example: clamav-exception-add /path/to/file
+	# Note: This requires root privileges, so you may need to run it with sudo
+	function clamav-exception-add {
+		if [[ -z $1 ]]; then
+			echo "Usage: clamav-exception-add <file>"
+			return 1
+		fi
+		if [[ ! -f $1 ]]; then
+			echo "File not found: $1"
+			return 1
+		fi
+		sudo bash -c "sigtool --sha256 $1 >> /var/lib/clamav/user-defined-exceptions.sfp"
+	}
+fi
 
 # Dotfiles management
 # TODO: Rewrite to use bash read instead of zsh read
