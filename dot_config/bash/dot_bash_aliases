@@ -6,16 +6,16 @@ hash ug 2>/dev/null && alias grep="ugrep"
 hash bat 2>/dev/null && alias cat="bat -p"
 hash zoxide 2>/dev/null && alias cd="z"
 hash fd 2>/dev/null && alias find="fd"
-# hash numbat 2>/dev/null && alias bc="numbat" # numbat is a bit more than just a bc alternative
+hash numbat 2>/dev/null && alias bc="numbat" # numbat is a bit more than just a bc alternative
 # hash eva 2>/dev/null && alias bc="eva" # eva is a bc alternative, but don't want to switch yet
-# hash fend 2>/dev/null && alias units="fend" # fend's syntax is a bit different from units, don't want to switch yet
+hash fend 2>/dev/null && alias units="fend" # fend's syntax is a bit different from units, don't want to switch yet
 # hash sd 2>/dev/null && alias sed="sd" # Disabled because some scripts use sed, and don't set the -i flag
 hash dust 2>/dev/null && alias du="dust"
 hash erd 2>/dev/null && alias tree="erd"
 hash dua 2>/dev/null && alias duai="dua interactive"
 hash tealdeer 2>/dev/null && alias tldr="tealdeer"
 hash hexyl 2>/dev/null && alias xxd="hexyl"
-hash xdg-open 2>/dev/null && alias start="xdg-open"
+hash xdg-open 2>/dev/null && alias start="xdg-open" && alias open="xdg-open"
 hash micro 2>/dev/null && alias edit="micro" && alias nano="micro"
 hash nvim 2>/dev/null && alias vim="nvim" && alias vi="nvim"
 hash trash-put 2>/dev/null && alias rm="trash-put" && alias tp="trash-put"
@@ -143,13 +143,16 @@ if hash chezmoi 2>/dev/null; then
 	alias .update="chezmoi update"
 fi
 
+# Other aliases
+alias rce='xdg-open $HOME/.bashrc && xdg-open $HOME/.zshrc && xdg-open $XDG_CONFIG_HOME/bash/.bash_aliases'
+
+
 # XDG aliases
 alias wget='wget --hsts-file="$XDG_DATA_HOME"/wget-hsts'
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME"/yarn/config'
 alias units='units --history "$XDG_DATA_HOME"/units_history'
 alias nvidia-settings='nvidia-settings --config="$XDG_CONFIG_HOME"/nvidia/settings'
 alias adb='HOME="$XDG_DATA_HOME"/android adb'
-
 
 # If we have local rust installed, set it up
 if [[ -f $XDG_DATA_HOME/cargo/env ]]; then
