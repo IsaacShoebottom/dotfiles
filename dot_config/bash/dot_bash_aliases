@@ -145,6 +145,7 @@ fi
 
 # Other aliases
 alias rce='xdg-open $HOME/.bashrc && xdg-open $HOME/.zshrc && xdg-open $XDG_CONFIG_HOME/bash/.bash_aliases'
+alias ftpd-simple='python -m pyftpdlib'
 
 
 # XDG aliases
