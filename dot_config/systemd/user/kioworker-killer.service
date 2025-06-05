@@ -1,0 +1,6 @@
+[Unit]
+Description=Kill any long living kioworker threads
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pkill kioworker
