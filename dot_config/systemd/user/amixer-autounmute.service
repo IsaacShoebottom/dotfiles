@@ -1,6 +1,6 @@
 [Unit]
-Description=Disable Auto-Mute on sound card 3
+Description=Disable Auto-Mute on sound card on a range of 10 cards, since it can vary
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/amixer -c 3 sset "Auto-Mute Mode" Disabled
+ExecStart=/usr/bin/bash -c 'for i in {1..10}; do amixer -c $i sset "Auto-Mute Mode" Disabled; done; exit 0'
