@@ -43,7 +43,10 @@ if hash lsb_release 2>/dev/null; then
 	hash snap 2>/dev/null && command+="sudo snap refresh && sudo snap remove --purge $(snap list --all | awk '/^.*disabled/{print $1}'); "
 
 	# Firmware
-	hash fwupdmgr 2>/dev/null && command+="fwupdmgr refresh --force && fwupdmgr update;"
+	hash fwupdmgr 2>/dev/null && command+="fwupdmgr refresh && fwupdmgr update; "
+
+	# Return 0 to indicate that the function has finished successfully
+	command+="return 0"
 
 	# We want this to be expanded to the command, as the command is not very helpful
 	# shellcheck disable=SC2139
