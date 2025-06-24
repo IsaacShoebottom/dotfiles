@@ -64,7 +64,7 @@ ffmpeg -y -i "$INPUT" -vn -acodec pcm_s16le -ar 16000 -ac 1 "$TMP_WAV" > /dev/nu
 echo "Transcribing with whisper-cli..."
 echo "Using model: $MODEL_PATH"
 # -pp to enable progress printing
-whisper-cli -sow -sns -pc -np --prompt "Please do not forget punctuation and capitalization!" -t "$(nproc)" -m "$MODEL_PATH" -f "$TMP_WAV" --output-srt -of "${BASENAME}"
+whisper-cli -sow -sns -pc -np --prompt "Please do not forget punctuation and capitalization, and keep the length of a line consistent!" -t "$(nproc)" -m "$MODEL_PATH" -f "$TMP_WAV" --output-srt -of "${BASENAME}"
 
 # Cleanup
 rm -f "$TMP_WAV"
