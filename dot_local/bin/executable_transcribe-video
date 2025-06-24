@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# Suggested models from aur
+# whisper.cpp-model-large-v3-turbo-q5_0 whisper.cpp-model-medium-q5_0 whisper.cpp-model-small.en-q5_1 whisper.cpp-model-tiny.en-q5_1
+
+set -e
+
+# Check dependencies
+command -v ffmpeg >/dev/null || { echo "ffmpeg not found"; exit 1; }
+command -v whisper-cli >/dev/null || { echo "whisper-cli not found"; exit 1; }
+
+# Check input file
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 <video_file.(mp4|mkv)>"
+    exit 1
+fi
+
+# Get whisper installed models
+model_folders=$(find /usr/share/ -maxdepth 1 -type d -name "whisper.cpp-model-*")
+if [[ -z "$model_folders" ]]; then
+	echo "No whisper models found in /usr/share/"
+	exit 1
+fi
+# Find bin files in the model folders
+model_files=$(find $model_folders -maxdepth 1 -type f -name "*.bin")
+if [[ -z "$model_files" ]]; then
+	echo "No whisper model files found in /usr/share/"
+	exit 1
+fi
+
+# If --list-models is passed, list available models
+if [[ "$1" == "--list-models" ]]; then
+	echo "Available whisper models:"
+	for model in $model_files; do
+		echo "$model"
+	done
+	exit 0
+fi
+
+# One argument default
+INPUT="$1"
+
+# If --model is passed, use the second argument as the model path,
+if [[ "$1" == "--model" && -n "$2" ]]; then
+	if [[ ! -f "$2" ]]; then
+		echo "Model file $2 does not exist."
+		exit 1
+	fi
+	MODEL_PATH="$2"
+	INPUT="$3"
+else
+	# Default to the last model found
+	MODEL_PATH=$(echo "$model_files" | head -n 1)
+fi
+
+BASENAME=${INPUT%.*}
+TMP_WAV=$(mktemp --suffix=".wav")
+
+# Extract and convert audio
+echo "Extracting and converting audio..."
+ffmpeg -y -i "$INPUT" -vn -acodec pcm_s16le -ar 16000 -ac 1 "$TMP_WAV" > /dev/null 2>&1
+
+# Run whisper-cli
+echo "Transcribing with whisper-cli..."
+echo "Using model: $MODEL_PATH"
+# -pp to enable progress printing
+whisper-cli -sow -sns -pc -np --prompt "Please do not forget punctuation and capitalization!" -t "$(nproc)" -m "$MODEL_PATH" -f "$TMP_WAV" --output-srt -of "${BASENAME}"
+
+# Cleanup
+rm -f "$TMP_WAV"
+echo "Done. Temporary file removed."
