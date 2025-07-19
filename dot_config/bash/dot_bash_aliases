@@ -147,9 +147,10 @@ if hash chezmoi 2>/dev/null; then
 fi
 
 # Other aliases
-alias rce='xdg-open $HOME/.bashrc && xdg-open $HOME/.zshrc && xdg-open $XDG_CONFIG_HOME/bash/.bash_aliases'
-alias ftpd-simple='python -m pyftpdlib'
-
+alias rce='xdg-open $HOME/.bashrc && xdg-open $HOME/.zshrc && xdg-open $XDG_CONFIG_HOME/bash/.bash_aliases' # Open bash and zsh config files in editor
+alias ftpd-simple='python -m pyftpdlib' # Simple FTP server, useful for transferring files between devices
+alias obs-save='obs-cmd replay save' # obs-cmd from aur (https://github.com/grigio/obs-cmd) required. Also bound to Alt + Z
+alias plasma-restart='systemctl --user restart plasma-plasmashell.service' # Sometimes plasma is buggy and needs a restart, bound to Alt + Shift + Ctrl + R
 
 # XDG aliases
 alias wget='wget --hsts-file="$XDG_DATA_HOME"/wget-hsts'
