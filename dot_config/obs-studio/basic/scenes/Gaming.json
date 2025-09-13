@@ -9,7 +9,7 @@
     "name": "Gaming",
     "sources": [
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Display Capture",
             "uuid": "2a0cda15-1329-4224-96aa-0633210d2dae",
             "id": "scene",
@@ -21,7 +21,7 @@
                     {
                         "name": "Screen Capture",
                         "source_uuid": "23864929-52b2-4b4a-83f9-10d58a6ea4c9",
-                        "visible": false,
+                        "visible": true,
                         "locked": false,
                         "rot": 0.0,
                         "scale_ref": {
@@ -326,7 +326,7 @@
             "private_settings": {}
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Screen Capture",
             "uuid": "23864929-52b2-4b4a-83f9-10d58a6ea4c9",
             "id": "pipewire-screen-capture-source",
@@ -352,7 +352,7 @@
             "private_settings": {}
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Discord",
             "uuid": "1f07b61b-b59b-4699-8435-e61d6ff8d8da",
             "id": "pipewire_audio_application_capture",
@@ -385,7 +385,7 @@
             "private_settings": {},
             "filters": [
                 {
-                    "prev_ver": 520159233,
+                    "prev_ver": 536870912,
                     "name": "Limiter",
                     "uuid": "d659ba67-4350-446a-a50b-855bc8d4f202",
                     "id": "limiter_filter",
@@ -411,7 +411,7 @@
             ]
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Mic",
             "uuid": "481a2879-3449-4d07-b2c2-812e978a2eab",
             "id": "pipewire_audio_input_capture",
@@ -440,7 +440,7 @@
             "private_settings": {},
             "filters": [
                 {
-                    "prev_ver": 520159233,
+                    "prev_ver": 536870912,
                     "name": "Noise Suppression",
                     "uuid": "91e69fad-ada8-43e6-9d13-7aa48fe508dd",
                     "id": "noise_suppress_filter",
@@ -464,7 +464,7 @@
                     "private_settings": {}
                 },
                 {
-                    "prev_ver": 520159233,
+                    "prev_ver": 536870912,
                     "name": "Noise Gate",
                     "uuid": "dbfba3f9-d478-46ae-824a-6284dcd44cee",
                     "id": "noise_gate_filter",
@@ -490,7 +490,7 @@
             ]
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Game Capture",
             "uuid": "f8481b2c-170c-425b-b259-4cbb2ec12b8b",
             "id": "vkcapture-source",
@@ -516,7 +516,7 @@
             "private_settings": {}
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 536870912,
             "name": "Game Audio",
             "uuid": "80c60256-48e7-4397-8163-3bb44480d9ab",
             "id": "pipewire_audio_application_capture",
@@ -607,7 +607,7 @@
     "transition_duration": 300,
     "preview_locked": false,
     "scaling_enabled": false,
-    "scaling_level": -69,
+    "scaling_level": -10,
     "scaling_off_x": 0.0,
     "scaling_off_y": 0.0,
     "virtual-camera": {

@@ -21,50 +21,138 @@ hash nvim 2>/dev/null && alias vim="nvim" && alias vi="nvim"
 hash trash-put 2>/dev/null && alias rm="trash-put" && alias tp="trash-put"
 hash gallery-dl 2>/dev/null && alias gallery-dl="gallery-dl --cookies-from-browser firefox"
 
-if hash lsb_release 2>/dev/null; then
-    if [[ $(lsb_release -si) =~ "Arch" ]]; then
-		alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
-		# System package managers
+function update-mirrors {
+	# Termux special case
+	if [[ "$TERMUX_VERSION" ]]; then
+		termux-change-repo
+		return $?
+	fi
 
-		hash pacman 2>/dev/null && command="sudo pacman -Syu; sudo pacman -Sc; "
-		hash pamac 2>/dev/null && command="pamac update; pamac clean; "
-		hash yay 2>/dev/null && command="yay; yay -Sc; "
-		hash paru 2>/dev/null && command="paru; paru -c; "
+	if [[ $(lsb_release -si) =~ "Arch" ]]; then
+		if hash rate-mirrors 2>/dev/null; then
+			rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist
+			rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist
+		else
+			echo "rate-mirrors not found, cannot update mirrors."
+			return 1
+		fi
 	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
-		alias update-mirrors="sudo nala fetch --auto -c US -c CA"
+		if hash nala 2>/dev/null; then
+			sudo nala fetch --auto -c US -c CA
+		else
+			echo "nala not found, cannot update mirrors."
+			return 1
+		fi
+	else
+		echo "No supported package manager found for updating mirrors."
+		return 1
+	fi
+	return 0
+}
 
-		# System package managers
-		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove; "
-		hash aptitude 2>/dev/null && command="sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove; "
-		hash nala 2>/dev/null && command="sudo nala update && sudo nala upgrade && sudo nala autoremove; "
+function update {
+	# Termux special case
+	if [[ "$TERMUX_VERSION" ]]; then
+		pkg upgrade && pkg autoclean
+		return $?
+	fi
+
+	# Check if we have at least 10GB of free space before running the update
+	free_space="$(df --output=avail / | tail -n 1)"
+	if (( free_space < 10485760 )); then # 10485760 = 10 * 1024 * 1024 (10GB in KB)
+		# Less than 10GB free space
+		# Ask user if they want to continue
+		echo "Warning: Less than 10GB of free space available. Continue? [y/N] "
+		read -r answer
+		if [[ $answer =~ ^[Nn]$ ]]; then
+			echo "Update cancelled."
+			return 1
+		fi
+	fi
+
+	if [[ $(lsb_release -si) =~ "Arch" ]]; then
+		if hash paru 2>/dev/null; then
+			paru; paru -c
+		elif hash yay 2>/dev/null; then
+			yay; yay -Sc
+		elif hash pamac 2>/dev/null; then
+			pamac update; pamac clean
+		elif hash pacman 2>/dev/null; then
+			sudo pacman -Syu; sudo pacman -Sc
+		else
+			echo "No supported package manager found for Arch."
+			return 1
+		fi
+	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
+		if hash nala 2>/dev/null; then
+			sudo nala update && sudo nala upgrade && sudo nala autoremove
+		elif hash aptitude 2>/dev/null; then
+			sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove
+		elif hash apt 2>/dev/null; then
+			sudo apt update && sudo apt upgrade && sudo apt autoremove
+		else
+			echo "No supported package manager found for Debian/Ubuntu."
+			return 1
+		fi
 	fi
 	# Non system packages
-	hash flatpak 2>/dev/null && command+="flatpak update && flatpak uninstall --unused; "
-	hash snap 2>/dev/null && command+="sudo snap refresh && sudo snap remove --purge $(snap list --all | awk '/^.*disabled/{print $1}'); "
-
-	# Firmware
-	hash fwupdmgr 2>/dev/null && command+="fwupdmgr refresh && fwupdmgr update; "
-
-	# Return 0 to indicate that the function has finished successfully
-	command+="return 0"
-
-	# We want this to be expanded to the command, as the command is not very helpful
-	# shellcheck disable=SC2139
-	alias update="$command"
-elif [[ "$TERMUX_VERSION" ]]; then
-	# Termux, special case
-	alias update-mirrors="termux-change-repo"
-	alias update="pkg upgrade && pkg autoclean"
-# Non privaledged environemnt, have to use local package managers like eget, nix, etc
-else
-	alias update-mirrors="echo 'No mirrors to update'"
-	alias update='eget -D; . "$HOME"/.config/eget/post_install.sh'
-	alias nix-shell-local="nix-user-chroot ~/.local/share/nix bash"
-
-	if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
-	. ~/.nix-profile/etc/profile.d/nix.sh
+	if hash flatpak 2>/dev/null; then
+		flatpak update && flatpak uninstall --unused
 	fi
-fi
+	if hash snap 2>/dev/null; then
+		sudo snap refresh && sudo snap remove --purge "$(snap list --all | awk '/^.*disabled/{print $1}')"
+	fi
+	# Firmware
+	if hash fwupdmgr 2>/dev/null; then
+		fwupdmgr refresh && fwupdmgr update
+	fi
+	return 0
+}
+
+# if hash lsb_release 2>/dev/null; then
+#     if [[ $(lsb_release -si) =~ "Arch" ]]; then
+# 		alias update-mirrors="rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; rate-mirrors chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist"
+# 		# System package managers
+
+# 		hash pacman 2>/dev/null && command="sudo pacman -Syu; sudo pacman -Sc; "
+# 		hash pamac 2>/dev/null && command="pamac update; pamac clean; "
+# 		hash yay 2>/dev/null && command="yay; yay -Sc; "
+# 		hash paru 2>/dev/null && command="paru; paru -c; "
+# 	elif [[ $(lsb_release -si) =~ "Debian" || $(lsb_release -si) =~ "Ubuntu" ]]; then
+# 		alias update-mirrors="sudo nala fetch --auto -c US -c CA"
+
+# 		# System package managers
+# 		hash apt 2>/dev/null && command="sudo apt update && sudo apt upgrade && sudo apt autoremove; "
+# 		hash aptitude 2>/dev/null && command="sudo aptitude update && sudo aptitude upgrade && sudo aptitude autoremove; "
+# 		hash nala 2>/dev/null && command="sudo nala update && sudo nala upgrade && sudo nala autoremove; "
+# 	fi
+# 	# Non system packages
+# 	hash flatpak 2>/dev/null && command+="flatpak update && flatpak uninstall --unused; "
+# 	hash snap 2>/dev/null && command+="sudo snap refresh && sudo snap remove --purge $(snap list --all | awk '/^.*disabled/{print $1}'); "
+
+# 	# Firmware
+# 	hash fwupdmgr 2>/dev/null && command+="fwupdmgr refresh && fwupdmgr update; "
+
+# 	# Return 0 to indicate that the function has finished successfully
+# 	command+="return 0"
+
+# 	# We want this to be expanded to the command, as the command is not very helpful
+# 	# shellcheck disable=SC2139
+# 	alias update="$command"
+# elif [[ "$TERMUX_VERSION" ]]; then
+# 	# Termux, special case
+# 	alias update-mirrors="termux-change-repo"
+# 	alias update="pkg upgrade && pkg autoclean"
+# # Non privaledged environemnt, have to use local package managers like eget, nix, etc
+# else
+# 	alias update-mirrors="echo 'No mirrors to update'"
+# 	alias update='eget -D; . "$HOME"/.config/eget/post_install.sh'
+# 	alias nix-shell-local="nix-user-chroot ~/.local/share/nix bash"
+
+# 	if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+# 	. ~/.nix-profile/etc/profile.d/nix.sh
+# 	fi
+# fi
 
 if hash eza 2>/dev/null; then
 	function ls {
@@ -150,7 +238,8 @@ fi
 alias rce='xdg-open $HOME/.bashrc && xdg-open $HOME/.zshrc && xdg-open $XDG_CONFIG_HOME/bash/.bash_aliases' # Open bash and zsh config files in editor
 alias ftpd-simple='python -m pyftpdlib' # Simple FTP server, useful for transferring files between devices
 alias obs-save='obs-cmd replay save' # obs-cmd from aur (https://github.com/grigio/obs-cmd) required. Also bound to Alt + Z
-alias plasma-restart='systemctl --user restart plasma-plasmashell.service' # Sometimes plasma is buggy and needs a restart, bound to Alt + Shift + Ctrl + R
+alias plasma-restart='systemctl --user restart plasma-plasmashell.service' # Sometimes plasma is buggy and needs a restart, bound to Alt + Shift + Ctrl +
+alias arch-fix-broken='paru -S $(paru -Qk 2>/dev/null | grep -v " 0 missing files" | cut -d: -f1) --overwrite "*" --noconfirm'
 
 # XDG aliases
 alias wget='wget --hsts-file="$XDG_DATA_HOME"/wget-hsts'

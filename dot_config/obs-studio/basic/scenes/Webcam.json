@@ -9,7 +9,7 @@
     "name": "Webcam",
     "sources": [
         {
-            "prev_ver": 520159233,
+            "prev_ver": 520159234,
             "name": "Virtual Cam",
             "uuid": "11ddcc7c-a668-4282-bee5-8847a42155dd",
             "id": "scene",
@@ -47,16 +47,16 @@
                             "y": -1.0
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0
+                            "x": 1.5,
+                            "y": 1.5
                         },
                         "scale_rel": {
                             "x": 1.5,
                             "y": 1.5
                         },
                         "bounds": {
-                            "x": 1280.0,
-                            "y": 720.0
+                            "x": 1920.0,
+                            "y": 1080.0
                         },
                         "bounds_rel": {
                             "x": 3.555555582046509,
@@ -98,7 +98,7 @@
             "private_settings": {}
         },
         {
-            "prev_ver": 520159233,
+            "prev_ver": 520159234,
             "name": "Video Capture Device (V4L2)",
             "uuid": "6d218351-f947-42ca-9772-26e606173df6",
             "id": "v4l2_input",
@@ -135,7 +135,7 @@
             "private_settings": {},
             "filters": [
                 {
-                    "prev_ver": 520159233,
+                    "prev_ver": 520159234,
                     "name": "UnFish/Fish Lens",
                     "uuid": "0340a54e-ff5a-4c8e-b132-660a43b45e33",
                     "id": "filter-fish-lens",
@@ -194,7 +194,7 @@
     "transition_duration": 300,
     "preview_locked": false,
     "scaling_enabled": false,
-    "scaling_level": -4,
+    "scaling_level": -10,
     "scaling_off_x": 0.0,
     "scaling_off_y": 0.0,
     "virtual-camera": {
