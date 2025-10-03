@@ -97,14 +97,14 @@ function update {
 	fi
 	# Non system packages
 	if hash flatpak 2>/dev/null; then
-		flatpak update && flatpak uninstall --unused
+		sudo flatpak update && sudo flatpak uninstall --unused
 	fi
 	if hash snap 2>/dev/null; then
 		sudo snap refresh && sudo snap remove --purge "$(snap list --all | awk '/^.*disabled/{print $1}')"
 	fi
 	# Firmware
 	if hash fwupdmgr 2>/dev/null; then
-		fwupdmgr refresh && fwupdmgr update
+		sudo fwupdmgr refresh && sudo fwupdmgr update
 	fi
 	return 0
 }

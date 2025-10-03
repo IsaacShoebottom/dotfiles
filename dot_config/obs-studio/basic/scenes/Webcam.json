@@ -9,7 +9,7 @@
     "name": "Webcam",
     "sources": [
         {
-            "prev_ver": 520159234,
+            "prev_ver": 536870912,
             "name": "Virtual Cam",
             "uuid": "11ddcc7c-a668-4282-bee5-8847a42155dd",
             "id": "scene",
@@ -98,7 +98,7 @@
             "private_settings": {}
         },
         {
-            "prev_ver": 520159234,
+            "prev_ver": 536870912,
             "name": "Video Capture Device (V4L2)",
             "uuid": "6d218351-f947-42ca-9772-26e606173df6",
             "id": "v4l2_input",
@@ -135,7 +135,7 @@
             "private_settings": {},
             "filters": [
                 {
-                    "prev_ver": 520159234,
+                    "prev_ver": 536870912,
                     "name": "UnFish/Fish Lens",
                     "uuid": "0340a54e-ff5a-4c8e-b132-660a43b45e33",
                     "id": "filter-fish-lens",

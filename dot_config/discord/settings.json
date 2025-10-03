@@ -20,5 +20,5 @@
   "trayBalloonShown": true,
   "BACKGROUND_COLOR": "#000000",
   "enableHardwareAcceleration": true,
-  "offloadAdmControls": false
+  "offloadAdmControls": true
 }
