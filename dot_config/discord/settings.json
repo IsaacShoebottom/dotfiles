@@ -20,5 +20,6 @@
   "trayBalloonShown": true,
   "BACKGROUND_COLOR": "#000000",
   "enableHardwareAcceleration": true,
-  "offloadAdmControls": true
+  "offloadAdmControls": true,
+  "asyncVideoInputDeviceInit": false
 }

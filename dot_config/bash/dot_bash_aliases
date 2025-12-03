@@ -20,6 +20,7 @@ hash micro 2>/dev/null && alias edit="micro" && alias nano="micro"
 hash nvim 2>/dev/null && alias vim="nvim" && alias vi="nvim"
 hash trash-put 2>/dev/null && alias rm="trash-put" && alias tp="trash-put"
 hash gallery-dl 2>/dev/null && alias gallery-dl="gallery-dl --cookies-from-browser firefox"
+hash yt-dlp 2>/dev/null && alias yt-dlp="yt-dlp --cookies-from-browser firefox"
 
 function update-mirrors {
 	# Termux special case
