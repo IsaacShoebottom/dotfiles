@@ -3,8 +3,8 @@
   "IS_MAXIMIZED": true,
   "IS_MINIMIZED": false,
   "WINDOW_BOUNDS": {
-    "x": 4127,
-    "y": 144,
+    "x": 320,
+    "y": 277,
     "width": 1280,
     "height": 720
   },
@@ -21,5 +21,7 @@
   "BACKGROUND_COLOR": "#000000",
   "enableHardwareAcceleration": true,
   "offloadAdmControls": true,
-  "asyncVideoInputDeviceInit": false
+  "asyncVideoInputDeviceInit": false,
+  "openH264Enabled": true,
+  "enableLibOpenH264Electron": false
 }
