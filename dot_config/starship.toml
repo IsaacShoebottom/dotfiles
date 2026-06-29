@@ -1,11 +1,14 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 username.show_always = true
 username.format = "[$user]($style)"
 username.style_user = "white"
 hostname.ssh_only = false
-hostname.format = "[$ssh_symbol$hostname]($style)"
+hostname.format = "[$hostname$ssh_symbol]($style)"
 hostname.style = "white"
-hostname.ssh_symbol = " 🌐 "
+hostname.ssh_symbol = " 🌐"
 directory.truncate_to_repo = false
 directory.format = "[$path]($style)[$read_only]($read_only_style)"
 directory.style = "white"
